@@ -1,0 +1,163 @@
+VERSION 5.00
+Begin VB.PropertyPage pagCashIndex 
+   Caption         =   "General"
+   ClientHeight    =   2325
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   4425
+   LockControls    =   -1  'True
+   PaletteMode     =   0  'Halftone
+   ScaleHeight     =   2325
+   ScaleWidth      =   4425
+   Begin VB.Frame Frame1 
+      Caption         =   "Payment mode"
+      Height          =   915
+      Left            =   2340
+      TabIndex        =   6
+      Top             =   1050
+      Width           =   1635
+      Begin VB.OptionButton optCheque 
+         Caption         =   "Cheque "
+         Height          =   225
+         Left            =   120
+         TabIndex        =   8
+         Top             =   570
+         Width           =   1185
+      End
+      Begin VB.OptionButton optCash 
+         Caption         =   "Cash"
+         Height          =   225
+         Left            =   120
+         TabIndex        =   7
+         Top             =   270
+         Value           =   -1  'True
+         Width           =   1275
+      End
+   End
+   Begin VB.CheckBox chkCashReceiveError 
+      Caption         =   "Cash receive error"
+      Height          =   204
+      Left            =   120
+      TabIndex        =   5
+      Top             =   1620
+      Width           =   2076
+   End
+   Begin VB.TextBox txtDialogTitle 
+      Height          =   288
+      Left            =   1656
+      TabIndex        =   3
+      Top             =   240
+      Width           =   2340
+   End
+   Begin VB.CheckBox chkCancelError 
+      Caption         =   "Cancel error"
+      Height          =   204
+      Left            =   120
+      TabIndex        =   2
+      Top             =   1170
+      Width           =   2076
+   End
+   Begin VB.TextBox txtExpectedCash 
+      Height          =   288
+      Left            =   1656
+      TabIndex        =   0
+      Top             =   648
+      Width           =   2340
+   End
+   Begin VB.Label Label2 
+      Alignment       =   1  'Right Justify
+      Caption         =   "Dialog title: "
+      Height          =   204
+      Left            =   96
+      TabIndex        =   4
+      Top             =   288
+      Width           =   1524
+   End
+   Begin VB.Label Label1 
+      Alignment       =   1  'Right Justify
+      Caption         =   "Expected cash: "
+      Height          =   204
+      Left            =   96
+      TabIndex        =   1
+      Top             =   696
+      Width           =   1524
+   End
+End
+Attribute VB_Name = "pagCashIndex"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+
+Private Sub chkCancelError_Click()
+    Changed = True
+End Sub
+
+Private Sub chkCashReceiveError_Click()
+    Changed = True
+End Sub
+Private Sub optCash_Click()
+    Changed = True
+End Sub
+
+Private Sub optCheque_Click()
+    Changed = True
+End Sub
+
+Private Sub PropertyPage_ApplyChanges()
+
+If chkCancelError.Value = 1 Then
+    SelectedControls(0).CancelError = True
+Else
+    SelectedControls(0).CancelError = False
+End If
+
+If chkCashReceiveError.Value = 1 Then
+    SelectedControls(0).CashReceiveError = True
+Else
+    SelectedControls(0).CashReceiveError = False
+End If
+    
+SelectedControls(0).DialogTitle = txtDialogTitle.Text
+SelectedControls(0).ExpectedCash = Format(txtExpectedCash.Text, "#############0.00")
+If optCash.Value Then
+    SelectedControls(0).PaymentMode = 0
+Else
+    SelectedControls(0).PaymentMode = 1
+End If
+
+End Sub
+
+Private Sub PropertyPage_SelectionChanged()
+
+txtDialogTitle.Text = SelectedControls(0).DialogTitle
+txtExpectedCash.Text = SelectedControls(0).ExpectedCash
+If SelectedControls(0).CancelError = True Then
+    chkCancelError.Value = 1
+Else
+    chkCancelError.Value = 0
+End If
+If SelectedControls(0).CashReceiveError = True Then
+    chkCashReceiveError.Value = 1
+Else
+    chkCashReceiveError.Value = 0
+End If
+
+If SelectedControls(0).PaymentMode = 0 Then
+    optCash.Value = True
+Else
+    optCheque.Value = True
+End If
+
+Changed = False
+End Sub
+
+Private Sub txtDialogTitle_Change()
+Changed = True
+End Sub
+
+Private Sub txtExpectedCash_Change()
+Changed = True
+End Sub
+
