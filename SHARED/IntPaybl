@@ -1,0 +1,328 @@
+VERSION 5.00
+Begin VB.Form frmIntPayble 
+   BorderStyle     =   1  'Fixed Single
+   Caption         =   "Form1"
+   ClientHeight    =   6195
+   ClientLeft      =   1980
+   ClientTop       =   1530
+   ClientWidth     =   6510
+   LinkTopic       =   "Form1"
+   LockControls    =   -1  'True
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
+   ScaleHeight     =   6195
+   ScaleWidth      =   6510
+   Begin VB.CommandButton cmdOK 
+      Caption         =   "&OK"
+      Height          =   315
+      Left            =   4560
+      TabIndex        =   8
+      Top             =   5760
+      Width           =   855
+   End
+   Begin VB.CommandButton cmdCancel 
+      Cancel          =   -1  'True
+      Caption         =   "&Cancel"
+      Height          =   315
+      Left            =   5520
+      TabIndex        =   9
+      Top             =   5760
+      Width           =   855
+   End
+   Begin VB.PictureBox picOut 
+      Height          =   5625
+      Left            =   150
+      ScaleHeight     =   5565
+      ScaleWidth      =   6225
+      TabIndex        =   4
+      Top             =   30
+      Width           =   6285
+      Begin VB.VScrollBar vScr 
+         Height          =   5565
+         Left            =   5970
+         TabIndex        =   11
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.Frame fraTitle 
+         Height          =   555
+         Left            =   30
+         TabIndex        =   0
+         Top             =   -60
+         Width           =   5895
+         Begin VB.Label lblCustTitle 
+            Caption         =   "Name of the Customer"
+            Height          =   315
+            Left            =   60
+            TabIndex        =   1
+            Top             =   150
+            Width           =   2775
+         End
+         Begin VB.Label lblBalance 
+            Caption         =   "BAlance"
+            Height          =   315
+            Left            =   4710
+            TabIndex        =   3
+            Top             =   150
+            Width           =   1065
+         End
+         Begin VB.Label lblIntTitle 
+            Caption         =   "Interest Payble"
+            Height          =   315
+            Left            =   3030
+            TabIndex        =   2
+            Top             =   150
+            Width           =   1485
+         End
+      End
+      Begin VB.Frame fraIN 
+         BorderStyle     =   0  'None
+         Height          =   915
+         Left            =   30
+         TabIndex        =   10
+         Top             =   510
+         Width           =   5895
+         Begin VB.TextBox txtAmount 
+            Alignment       =   1  'Right Justify
+            BorderStyle     =   0  'None
+            Height          =   285
+            Index           =   0
+            Left            =   3870
+            TabIndex        =   6
+            Top             =   180
+            Width           =   900
+         End
+         Begin VB.Label txtBalance 
+            Alignment       =   1  'Right Justify
+            BackColor       =   &H80000005&
+            Height          =   285
+            Index           =   0
+            Left            =   4830
+            TabIndex        =   7
+            Top             =   180
+            Width           =   1035
+         End
+         Begin VB.Label lblCustName 
+            Caption         =   "Name Of The Customer"
+            Height          =   285
+            Index           =   0
+            Left            =   150
+            TabIndex        =   5
+            Top             =   180
+            Width           =   3585
+         End
+      End
+   End
+End
+Attribute VB_Name = "frmIntPayble"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Option Explicit
+
+Dim m_Gap As Integer
+Public Function LoadContorls(ControlLoopCount As Integer, CtrlGap As Integer)
+
+On Error Resume Next
+If ControlLoopCount < 1 Then Exit Function
+
+Dim LoopCount As Integer
+Dim Gap As Integer
+
+
+LoopCount = ControlLoopCount
+If CtrlGap > 0 Then
+    m_Gap = CtrlGap
+Else
+    m_Gap = 50
+End If
+
+Gap = m_Gap
+
+Dim CustLeft As Integer
+Dim CustWidth As Integer
+Dim AmountLeft As Integer
+Dim AmountWidth As Integer
+Dim BalanceLeft As Integer
+Dim BalanceWidth As Integer
+
+Dim TopPos As Single
+Dim Ht As Single
+Dim IndxTab As Integer
+
+
+LoopCount = 0
+Ht = txtAmount(0).Height
+TopPos = txtBalance(LoopCount).Top + txtBalance(LoopCount).Height + Gap
+IndxTab = txtBalance(LoopCount).TabIndex + 1
+
+CustLeft = lblCustName(0).Left
+CustWidth = lblCustName(0).Width
+
+AmountLeft = txtAmount(0).Left
+AmountWidth = txtAmount(0).Width
+
+BalanceLeft = txtBalance(0).Left
+BalanceWidth = txtBalance(0).Width
+
+
+For LoopCount = 1 To ControlLoopCount - 1
+    Load lblCustName(LoopCount)
+    With lblCustName(LoopCount)
+        .Top = TopPos
+        .Left = CustLeft
+        .Width = CustWidth
+        .Height = Ht
+        .Visible = True
+        .TabIndex = IndxTab: IndxTab = IndxTab + 1
+    End With
+    Load txtAmount(LoopCount)
+    
+    With txtAmount(LoopCount)
+        .Top = TopPos
+        .Left = AmountLeft
+        .Width = AmountWidth
+        .Height = Ht
+        .Visible = True
+        .TabIndex = IndxTab: IndxTab = IndxTab + 1
+    End With
+    Load txtBalance(LoopCount)
+    With txtBalance(LoopCount)
+        .Top = TopPos
+        .Left = BalanceLeft
+        .Width = BalanceWidth
+        .Height = Ht
+        .Visible = True
+        .TabIndex = IndxTab: IndxTab = IndxTab + 1
+    End With
+    
+    'Now Set the top Position for next control
+    TopPos = txtAmount(LoopCount).Top + txtAmount(LoopCount).Height + Gap
+Next
+
+fraIN.Height = TopPos
+Dim CtrlsPerPage As Integer
+With vScr
+    .Min = 0
+    .Max = LoopCount
+    .SmallChange = 1
+    CtrlsPerPage = 14 'picOut.Height / (txtAmount(0).Height + Gap) - 1
+    If ControlLoopCount >= CtrlsPerPage And CtrlsPerPage > 1 Then
+        .Max = LoopCount - CtrlsPerPage + 2
+        .LargeChange = CtrlsPerPage - 1
+        .Visible = True
+    Else
+        .Visible = False
+        picOut.Width = picOut.Width - .Width
+        Me.Width = Me.Width - .Width
+    End If
+End With
+
+LoadContorls = True
+
+End Function
+
+
+Private Sub cmdCancel_Click()
+Unload Me
+End Sub
+
+
+Private Sub cmdOK_Click()
+Me.Hide
+
+End Sub
+
+
+Private Sub Form_Load()
+Dim Ctrl As Control
+On Error Resume Next
+'Now Assign the Kannada fonts to the All controls
+For Each Ctrl In Me
+    Ctrl.Font.Name = gFontName
+    If Not TypeOf Ctrl Is ComboBox Then
+        Ctrl.Font.Size = gFontSize
+    End If
+Next Ctrl
+lblCustTitle.Caption = LoadResString(gLangOffSet + 446)
+lblIntTitle.Caption = LoadResString(gLangOffSet + 450) 'Interest Payble
+lblBalance.Caption = LoadResString(gLangOffSet + 52) & " " & LoadResString(gLangOffSet + 450) 'Interest Payble
+End Sub
+
+
+
+Private Sub txtAmount_Change(Index As Integer)
+
+txtBalance(Index).Caption = FormatCurrency(Val(txtBalance(Index).Tag) + _
+        Val(txtAmount(Index).Text))
+
+If Index = txtAmount.Count - 1 Then Exit Sub
+
+'If Val(txtAmount(Index)) > 0 Then
+    txtAmount(txtAmount.Count - 1).Text = Val(txtAmount(txtAmount.Count - 1).Tag) - _
+            Val(txtAmount(Index).Tag) + Val(txtAmount(Index).Text)
+            
+'End If
+
+End Sub
+
+Private Sub txtAmount_GotFocus(Index As Integer)
+Dim TopPos As Single
+
+TopPos = txtAmount(Index).Top
+
+On Error Resume Next
+If TopPos + fraIN.Top > picOut.Height - fraTitle.Height Then
+    vScr.value = vScr.value + 1
+    fraIN.Top = fraIN.Top - txtAmount(0).Height + m_Gap
+End If
+
+If TopPos - m_Gap + fraIN.Top < fraTitle.Height Then
+    vScr.value = vScr.value - 1
+    fraIN.Top = fraIN.Top + txtAmount(0).Height + m_Gap
+End If
+
+Err.Clear
+
+End Sub
+
+Private Sub txtAmount_LostFocus(Index As Integer)
+    
+If Index = txtAmount.Count - 1 Then Exit Sub
+
+If Me.ActiveControl.Name = vScr.Name Then _
+    vScr.TabIndex = txtAmount(Index).TabIndex
+
+If Not CurrencyValidate(txtAmount(Index).Text, True) Then
+    txtAmount(Index).Text = "0.00"
+    Exit Sub
+Else
+    txtAmount(Index).Text = FormatCurrency(txtAmount(Index).Text)
+End If
+
+If Val(txtAmount(Index)) > 0 Then
+    txtAmount(txtAmount.Count - 1).Text = Val(txtAmount(txtAmount.Count - 1).Tag) - _
+            Val(txtAmount(Index).Tag) + Val(txtAmount(Index).Text)
+    txtAmount(Index).Tag = txtAmount(Index).Text
+    txtAmount(txtAmount.Count - 1).Tag = txtAmount(txtAmount.Count - 1).Text
+    
+End If
+
+End Sub
+
+
+Private Sub vScr_Change()
+    If Not IsNumeric(vScr.Tag) Then vScr.Tag = "0"
+    If Abs(vScr.Tag - vScr.value) = vScr.SmallChange Then
+        fraIN.Top = fraIN.Top + txtBalance(0).Height * (vScr.Tag - vScr.value)
+    ElseIf Abs(vScr.Tag - vScr.value) = vScr.LargeChange Then
+        fraIN.Top = fraIN.Top + (txtBalance(0).Height + m_Gap) * (picOut.Height / (txtBalance(0).Height + m_Gap) - 1) * IIf(vScr.Tag > vScr.value, 1, -1)
+    Else
+        fraIN.Top = vScr.value * txtBalance(0).Height * -1 + fraTitle.Height + fraTitle.Top
+        If fraIN.Top < -fraIN.Height Then fraIN.Top = picOut.Height - fraIN.Height
+    End If
+    vScr.Tag = vScr.value
+End Sub
+
+
