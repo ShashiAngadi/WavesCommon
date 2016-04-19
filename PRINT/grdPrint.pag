@@ -1,0 +1,104 @@
+VERSION 5.00
+Begin VB.PropertyPage pagTitle 
+   Caption         =   "Title"
+   ClientHeight    =   2355
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   5670
+   PaletteMode     =   0  'Halftone
+   ScaleHeight     =   2355
+   ScaleWidth      =   5670
+   Begin VB.TextBox txtReportTitle 
+      Height          =   315
+      Left            =   2070
+      TabIndex        =   7
+      Top             =   690
+      Width           =   3075
+   End
+   Begin VB.TextBox txtFooter 
+      Height          =   315
+      Left            =   2070
+      TabIndex        =   5
+      Top             =   1470
+      Width           =   3075
+   End
+   Begin VB.TextBox txtHeader 
+      Height          =   315
+      Left            =   2070
+      TabIndex        =   3
+      Text            =   " "
+      Top             =   1080
+      Width           =   3075
+   End
+   Begin VB.TextBox txtCompName 
+      Height          =   315
+      Left            =   2070
+      TabIndex        =   1
+      Top             =   300
+      Width           =   3075
+   End
+   Begin VB.Label lblFooter 
+      Caption         =   "Footer :"
+      Height          =   285
+      Left            =   300
+      TabIndex        =   6
+      Top             =   1500
+      Width           =   1485
+   End
+   Begin VB.Label lblHeader 
+      Caption         =   "Header :"
+      Height          =   285
+      Left            =   300
+      TabIndex        =   4
+      Top             =   1110
+      Width           =   1485
+   End
+   Begin VB.Label Label2 
+      Caption         =   "Report title :"
+      Height          =   285
+      Left            =   300
+      TabIndex        =   2
+      Top             =   720
+      Width           =   1485
+   End
+   Begin VB.Label Label1 
+      Caption         =   "Company name :"
+      Height          =   285
+      Left            =   300
+      TabIndex        =   0
+      Top             =   330
+      Width           =   1485
+   End
+End
+Attribute VB_Name = "pagTitle"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+
+Private Sub Label4_Click()
+
+End Sub
+
+
+Private Sub txtCompName_GotFocus()
+ActivateTextBox txtCompName
+End Sub
+
+
+Private Sub txtFooter_GotFocus()
+ActivateTextBox txtFooter
+End Sub
+
+
+Private Sub txtHeader_GotFocus()
+ActivateTextBox txtHeader
+End Sub
+
+
+Private Sub txtReportTitle_GotFocus()
+ActivateTextBox txtReportTitle
+End Sub
+
+
