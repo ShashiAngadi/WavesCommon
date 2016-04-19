@@ -1,0 +1,30 @@
+VERSION 5.00
+Begin VB.UserControl FilePath 
+   ClientHeight    =   990
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   1065
+   LockControls    =   -1  'True
+   Picture         =   "FilePath.ctx":0000
+   ScaleHeight     =   990
+   ScaleWidth      =   1065
+End
+Attribute VB_Name = "FilePath"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = False
+Option Explicit
+
+
+
+
+
+
+Private Sub UserControl_Resize()
+UserControl.Width = 400
+UserControl.Height = 400
+
+End Sub
+
+

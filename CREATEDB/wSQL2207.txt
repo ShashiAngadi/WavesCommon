@@ -1,0 +1,8 @@
+"Drop Table MemTrans                                                                                 
+"
+"Drop Table MemIntTrans                                                                              
+"
+"Drop Table MemTrans                                                                                 
+"
+"Drop Table MemIntTrans                                                                              
+"
