@@ -1,0 +1,4 @@
+STD_INPUT_HANDLE
+kbAPI kbConsole kbIPC kbKernBase kbNTOS400 kbWinOS2000 kbSDKPlatform kbWinOS95 kbWinOS98 kbfaq kbDSupport kbGrpKernBase 
+kbprint 
+kbPrinting 

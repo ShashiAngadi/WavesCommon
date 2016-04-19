@@ -1,0 +1,11 @@
+[Source]
+‘=Letter1
+®=Letter2
+³ğ=Letter3
+Ãñâ=Letter4
+
+[Destination]
+Letter1=Å
+Letter2=
+Letter3=–Ğ
+Letter4=»Ñï

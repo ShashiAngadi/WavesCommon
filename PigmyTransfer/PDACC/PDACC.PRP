@@ -1,0 +1,41 @@
+[Property Sheet]
+Prop1=Prompt=Agent Detail;PropType=Heading;SubItems=2
+;Prop2=Prompt=Agent Id;PropType=Editable;Description=Identifies Pigmy collectors Number;DescTitle=Agent Id
+Prop2=Prompt=Agent Name;PropType=Editable;LockEdit=True;Description=Identifies Pigmy collectors Name;DescTitle=Agent Name;DisplayType=List;DataSource=AgentName
+Prop3=Prompt=Account Holder;PropType=Heading;SubItems=2
+Prop4=Prompt=Account No;PropType=Editable;Description=Identifies Account number;DescTitle=Account No;DataSource=AccId
+Prop5=Prompt=Account Holder Name;PropType=Editable;Description=Identifies Account Holder Name;DescTitle=Name;DataSource=AccName;DisplayType=Browse
+Prop6=Prompt=Nominee;PropType=Heading;SubItems=3
+Prop7=Prompt=Name;PropType=Editable;Description=Identifies the name of the nominee.;DescTitle=Nominee Name;DataSource=NomineeName;
+Prop8=Prompt=Age;PropType=Editable;Description=Identifies the age of the nominee.;DescTitle=Age;DataSource=NomineeAge
+Prop9=Prompt=Relationship;PropType=Editable;LockEdit=True;Description=Identifies the relationship of the nominee with respect to the Account holder.;DescTitle=Relationship;DataSource=NomineeRelation;DisplayType=List;ListData=Unspecified,Mother,Father,Brother,Sister,Spouse,Son,Daughter,Others
+Prop10=Prompt=Pigmy Deposit;PropType=Heading;SubItems=4
+Prop11=Prompt=Pigmy Type;PropType=Editable;LockEdit=True;Description=Identifies the Type Of Pigmy Deposit.;DescTitle=Pigmy Type;DataSource=PigmyType;DisplayType=List;ListData=Daily,Weekly,Fortnightly,Monthly,Bimonthly,Quarterly
+Prop12=Prompt=Pigmy Amount;PropType=Editable;Description=Identifies the Pigmy Amount;DescTitle=Amount;DataSource=PigmyAmount
+Prop13=Prompt=Maturity Date;PropType=Editable;Description=Identifies the Maturity Date of Deposit.;DescTitle=Maturity Date ;DataSource=MaturityDate
+Prop14=Prompt=Rate Of Interest;PropType=Editable;Description=Identifies The Interest Rate Levied By The Bank.;DescTitle=Rate Of Interest;DataSource=RateOfInterest
+;Prop15=Prompt=JointHolders;PropType=Heading;SubItems=1;
+;Prop16=Prompt=List...;PropType=Editable;Description=Identifies the list of joint account holders excluding the account holder.;DescTitle=Joint Holders;DisplayType=Browse;DataSource=JointHolder
+Prop15=Prompt=Introducer;PropType=Heading;SubItems=2;
+Prop16=Prompt=Account number;PropType=Editable;Description=Identifies the account number of the Introducer.;DescTitle=Introducer account number.;DataSource=IntroducerID;DisplayType=Browse
+Prop17=Prompt=Name;PropType=Editable;DescTitle=Introducer name;Description=Identifies the name of the introducer.;Datasource=IntroducerName;LockEdit=True
+Prop18=Prompt=Ledger details;PropType=Heading;SubItems=3
+Prop19=Prompt=Ledger number;PropType=Editable;DescTitle=Ledger number;Description=Identifies the ledger number for this account.;DataSource=LedgerNo
+Prop20=Prompt=Folio number;PropType=Editable;DescTitle=Folio number;Description=Identifies the folio number for this account.;DataSource=FolioNo
+Prop21=Prompt=Creation date;PropType=Editable;DescTitle=Creation date;Description=Identifies the date on which this account was created.;DataSource=CreateDate
+Prop22=Prompt=Notify on Maturity;LockEdit=True;DescTite=Maturity Notice;Description=Informs that this account holder has to be intimated, when the deposit matures.;DisplayType=Boolean
+
+[Transactions]
+:Cols=6
+ColWidth0=1770
+ColWidth1=1020
+ColWidth2=1020
+ColWidth3=1020
+ColWidth4=3465
+ColWidth5=3030
+
+[Balances]
+Cols=2
+ColWidth0=2115
+ColWidth1=3135
+

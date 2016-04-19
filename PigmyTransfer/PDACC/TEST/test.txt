@@ -1,0 +1,21 @@
+Private Sub Form_Load()
+
+Dim St As String
+Dim StLen As Integer
+Dim Item As Integer
+Dim NewSt As String
+
+St = "PRASANNA  Swamy Hiremath"
+St = Trim$(St)
+StLen = Len(St)
+
+For Item = 1 To StLen
+    
+    NewSt = Mid(St, Item, 1)
+    Debug.Print NewSt
+    
+Next Item
+
+
+
+End Sub

@@ -1,0 +1,1 @@
+rc -r -DWIN32_LEAN_AND_MEAN -fo Test.res Test.rc
