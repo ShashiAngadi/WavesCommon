@@ -1,0 +1,225 @@
+Attribute VB_Name = "wisConst"
+Option Explicit
+Public Const wisGray = &H80000000
+'Shashi 4/12/2000
+Public Const vbWhite = &H80000005    '&H80000005&
+' Status variable constants...
+Public Const wis_CANCEL = 0
+Public Const wis_FAILURE = 0
+Public Const wis_OK = 1
+Public Const wis_SUCCESS = 2
+Public Const wis_COMPLETE = 3
+Public Const wis_EVENT_SUCCESS = 4
+Public Const wis_SHOW_FIRST = 5
+Public Const wis_SHOW_PREVIOUS = 6
+Public Const wis_SHOW_NEXT = 7
+Public Const wis_SHOW_LAST = 8
+Public Const wis_PRINT_CURRENT = 9
+Public Const wis_PRINT_ALL = 10
+Public Const wis_PRINT_ALL_PAUSE = 11
+Public Const wis_PRINT_CURRENT_PAUSE = 12
+Public Const wis_Print_Excel = 13
+' Database updation mode.
+Public Const wis_INSERT = 1
+Public Const wis_UPDATE = 2
+
+' Query mode constants...
+Public Const wis_QUERY_BY_CUSTOMERID = 1
+Public Const wis_QUERY_BY_CUSTOMERNAME = 2
+
+' The key name for this application in Registry.
+Public Const wis_INDEX2000_KEY = "Software\Waves Information Systems\Index2000"
+
+' Password for database.
+Public Const wis_PWD = "wis"
+
+' Title for Message boxes.
+Public Const wis_MESSAGE_TITLE = "Index-2000 Info..."
+
+' Module name constants...
+'Public Const wis_SB = 1
+'Public Const wis_CA = 2
+'Public Const wis_FD = 3
+'Public Const wis_RD = 4
+
+' Report Constants
+Enum wisReports
+    wisTradingAccount = 1
+    wisDebitCreditStatement = 2
+    wisProfitLossStatement = 3
+    wisBalanceSheet = 4
+    wisDailyRegister = 5
+    wisBankBalance = 6
+    wisDailyDebitCredit = 7
+End Enum
+
+
+Enum wisAccHeads
+    wis_CashInHand = 0
+    wis_SB = 51
+    wis_CA = 52
+    wis_FD = 53
+    wis_FDLoan = 54
+    wis_RD = 55
+    wis_RDLoan = 56
+    wis_PD = 57
+    wis_PDLoan = 58
+    wis_DL = 59
+    wis_DLLoan = 60
+    wis_Member = 61
+    wis_ProfitOrLoss = 62
+    wis_Stock = 63
+    wis_FromProfit = 64
+End Enum
+
+' Enumerated error values...
+Enum errors
+    wis_DATABASE_NOT_OPEN
+    wis_INVALID_DATABASE
+    wis_DUPLICATE_ACCNO
+    wis_INVALID_MODULEID
+    wis_INVALID_ACCNO
+    wis_ACCNO_NOT_SET
+    wis_MODULEID_NOT_SET
+    wis_INIT_FAIL
+    wis_FILENOTFOUND
+End Enum
+
+'The Report order definned here
+Public Enum wis_ReportOrder
+    wisByName = 1
+    wisByAccountNo = 2
+End Enum
+
+
+'New TransCtion Types defined below
+Public Enum wisTransactionTypes
+    ' wInterest & wCharges Are w.r.t Bank/Society
+'     wInterest = 2
+'     wCharges = -2
+    
+    ' wDeposit & wWithdraw are w.r.t to any Accounts
+    wDeposit = 1   'Customers money into account
+    'Redefnation Money Comes Into Accountirrespsctive of the account type
+    wWithDraw = 2     'Customers money out of account
+     
+    wContraDeposit = 3        'Customers money into account
+    'Redefnation Money Comes Into Accountirrespsctive of the account type
+    wContraWithDraw = 4      'Customers money out of account
+End Enum
+
+'Public Enum wisTransactionTypes
+'    '+ values indicate cust / bank money entering account
+'    '- values indicate cust / bank money drawn from account
+'    '1 indicates Money from / to customer
+'    '2 indicates money from / to bank
+'    ' wDeposit & wWithdraw are w.r.t to any Accounts
+'    ' wInterest & wCharges Are w.r.t Bank/Society
+'    wDeposit = 1        'Customers money into account
+'    'Redefnation Money Comes Into Accountirrespsctive of the account type
+'    wWithDraw = -1      'Customers money out of account
+'    'Money Go out of the account irrespsctive of the account type
+'    wCharges = -2       'Banks money out of account  (Fines, charges, etc)
+'    ' Money Comes in to the bank as Loss
+'    wInterest = 2       'Banks money into account   (Interest provided)
+'    ' Banks money go out of the bank as Profit
+'
+'
+'    'SHASHI 16/9/2000
+'    ' Extended For Contra Transactions
+'    ' This Not Implemented till now on any account except Materail
+'    ' For Which is special case
+'    ' The Contra is same as Deposit/Withdrawl
+'    ' Here in this case no physical money has transferred
+'    ' Money will be transferred through papers
+'    ' For Examples if customer submits a cheque of the same bank
+'    '     In such case the money simply transferred from one accoun to other
+'    wContraDeposit = 3
+'    wContraWithdraw = -3
+'    wContraInterest = 4   ' The Loss which effects the PL but not RP
+'    wContraCharges = -4   ' The Profit which effects the PL but not RP
+'    wRPInterest = 5       ' The amount which effects the RP (Cash) as receipts but not PL
+'    wRPCharges = -5       ' The amount which effects the RP (Cash) as payments but not PL
+'    wStock = 6
+'    wBKCCDeposit = 7      'BKCCDeposit's Money into account
+'    wBKCCWithDraw = -7    'BKCCDeposit's Money out of account
+'End Enum
+Enum wisModules
+    wis_None = 0
+    wis_CustReg = 1
+    wis_SBAcc = 2
+    wis_CAAcc = 3
+    wis_RDAcc = 4
+    wis_PDAcc = 5
+    wis_BKCC = 6
+    wis_BKCCLoan = 7
+    wis_Members = 8
+    wis_Users = 9
+    wis_MatAcc = 10
+    wis_SuspAcc = 11
+    wis_Deposits = 100
+    wis_DepositLoans = 200
+    wis_Loans = 300
+    wis_BankAccounts = 400
+    'The MAximum Module Id
+    'If we create new deposit
+    'we will Use Max Module Id
+    wis_MaxModId = 300
+End Enum
+
+Public Enum wis_DepositType
+    wisDeposit_SB = 1
+    wisDeposit_CA = 2
+    wisDeposit_RD = 4
+    wisDeposit_PD = 8
+    wisDeposit_FD = 10
+End Enum
+
+Enum wisLoanCategories
+    wisAgriculural = 1
+    wisNonAgriculural = 2
+End Enum
+
+Enum wisLoanTerm
+    wisShortTerm = 1
+    wisMidTerm = 2
+    wisLongTerm = 3
+End Enum
+
+Enum wisStatus
+   wisPending = 1
+   wisCleared = 2
+   wisBounced = 3
+End Enum
+
+Enum wis_Gender
+    wisMale = 1
+    wisFemale = 2
+    wisNoGender = 0
+End Enum
+Function ErrMsg(errNum As Integer, Optional ByVal errParam As String) As String
+' Returns the user-defined error description.
+Select Case errNum
+    Case wis_ACCNO_NOT_SET
+        ErrMsg = "The member variable AccNo is not set."
+    Case wis_MODULEID_NOT_SET
+        ErrMsg = "The member variable 'ModuleID' is not set."
+    Case wis_INVALID_MODULEID
+        'ErrMsg = "No module installed having id number " & errParam & "."
+        ErrMsg = "Module license information not found.  Please contact the vendor for licensed version of software modules."
+    Case wis_INIT_FAIL
+        ErrMsg = "Error in initializing the module."
+    Case wis_INVALID_ACCNO
+        ErrMsg = "Account number should be a valid number."
+    Case wis_FILENOTFOUND
+        ErrMsg = "Could not find the file  - " & errParam & "."
+    Case wis_DATABASE_NOT_OPEN
+        ErrMsg = "A database must be open, for a query to be executed."
+    Case wis_DUPLICATE_ACCNO
+        ErrMsg = "The account number " & errParam & " is in use."
+    Case wis_INVALID_DATABASE
+        ErrMsg = "The database is not proper or is corrupt."
+End Select
+End Function
+
+

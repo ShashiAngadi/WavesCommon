@@ -1,0 +1,27 @@
+[Particulars]
+Key0=Apple
+Key1=By Cheque
+Key2=By Interest
+ 
+[Property Sheet]
+Prop1=Prompt=²ρΐϊΑρΗπΗπ ΖπΗπ ;PropType=Heading;SubItems=2
+Prop2=Prompt=²ρΐϊ Νπ®²ϊε;PropType=Editable;Description=²ρΐϊΑρΗπΒπ ²ρΐϊ Νπ®²ϊε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=²ρΐϊΑρΗπ;DataSource=AccID;DisplayType=Browse
+Prop3=Prompt=²ρΐϊΑρΗπΒπ ΞϊΝπΗπτ;LockEdit=True;PropType=Editable;Description=²ρΐϊΑρΗπΒπ ΞϊΝπΗπΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=²ρΐϊΑρΗπΒπ ΞϊΝπΗπτ;DisplayType=Browse;DataSource=AccName
+Prop4=Prompt=Έ®‡ ²ρΐϊΑρΗπΗπ ΖπΗπ;LockEdit=True;PropType=Editable;Description=Έ®‡ ²ρΐϊΑρΗπΗπ ΞϊΝπΗπΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=²ρΐϊΑρΗπΒπ ΞϊΝπΗπτ;DisplayType=Browse;DataSource=JointHolder
+Prop5=Prompt=ΒρΖπτ ‹Αϊσ“ΐπ;PropType=Heading;SubItems=3
+Prop6=Prompt=ΒρΖπτ ‹Αϊσ“ΐπΒπ ³ρζΞπ°π Νπ®²ϊε;PropType=Editable;Description=ΒρΖπτ ‹Αϊσ“ΐπΒπ ³ρζΞπ°πΒπ Νπ®²ϊε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=Ζπ®υπτΝπτμ;DataSource=NomineeID
+Prop7=Prompt=ΞϊΝπΗπτ;PropType=Editable;Description=ΒρΖπτ ‹Αϊσ“ΐπΒπ ΞϊΝπΗπΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=ΒρΖπτ ‹ΑϊσΛπΒπ;DataSource=NomineeName;
+Prop8=Prompt=Νπ®Δ®Αώπ;PropType=Editable;LockEdit=True;Description=²ρΐϊΑρΗπΒϊχ®³ϊ ΒρΖπτ‹Αϊσ“ΐπΒπ Νπ®Δ®ΑπΖπΒπτα Νπχ„ΝπτΐπήΑϊ;DescTitle=Νπ®Δ®Αώπ;DataSource=NomineeRelation;DisplayType=List;ListData=ΐπ®Αϊ,ΐρτ,ΝπΞϊχσΑπΗπ,ΝπΞϊχσΑπ,Γπ‰,Γπ‰α,£ΐπΗϊ
+Prop9=Prompt=Γπ¶πτΝπτΖπΖπΗπτ;PropType=Heading;SubItems=2;
+Prop10=Prompt=²ρΐϊ Νπ®²ϊε;PropType=Editable;Description=Γπ¶πτΝπτΖπΖπΗπ ²ρΐϊ Νπ®²ϊε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=Γπ¶πτΝπτΖπΖπΗπ ³ρζΞπ°π Νπ®²ϊϋ.;DataSource=IntroducerID;DisplayType=Browse
+Prop11=Prompt=ΞϊΝπΗπτ;PropType=Editable;DescTitle=Γπ¶πτΝπτΖπΖπΗπ ΞϊΝπΗπτ;Description=Γπ¶πτΝπτΖπΖπΗπ ΞϊΝπΗπΒπτα Νπχ„ΝπτΐπήΑϊ.;Datasource=IntroducerName;LockEdit=True
+Prop12=Prompt=Ιϊ½πΧΗπ ΖπΗπ;PropType=Heading;SubItems=3
+Prop13=Prompt=Ιϊ½πΧΗπ Νπ®²ϊε;PropType=Editable;DescTitle=Ιϊ½πΧΗπ Νπ®²ϊε;Description=Ιϊ½πΧΗπ Νπ®²ϊε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DataSource=LedgerNo
+Prop14=Prompt=Γώϊψ‘®υϊχ Νπ®²ϊε;PropType=Editable;DescTitle=Γώϊψ‘®υϊχ Νπ®²ϊε;Description=²ρΐϊ®υπτ Γώϊψ‘®υϊχ Νπ®±ε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DataSource=FolioNo
+Prop15=Prompt=ΗΟϊσΖπφ Γπ‰ζ°ϊ ΖπΗππ;PropType=Heading;SubItems=3
+Prop16=Prompt=²ρΐϊ ΐϊΗϊ®υπττΖπ Βρ®°π;PropType=Editable;DescTitle=²ρΐϊ ΐϊΗϊ®υπττΖπ Βρ®°π;Description=²ρΐϊ ΐϊΗϊ®υπττΖπ Βρ®°πΖπΒπτα Νπχ„ΝπτΐπήΑϊ.;DataSource=CreateDate
+Prop17=Prompt=ΗΟϊσΖπφ Γπ‰ζ°ϊ Νπ®²ϊε;PropType=Editable;DescTitle=ΗΟϊσΖπφ Γπ‰ζ°ϊ Νπ®²ϊε;Description=¤³π £ΗπτΖπ ΗΟϊσΖπφ Γπ‰ζ°ϊ®υπτ Νπ®²ϊε®υπτΒπτα ‹σΖπφ £‘η ΔΑπ‘ΝπΔΞπτΑπτ. You change this here.;DataSource=CertificateNo
+Prop18=Prompt=ΗΟϊσΖπΎς®υπτ Δά ΑπΗπ;PropType=Editable;DescTitle=Δά®υπτ ΑπΗπ;Description=¤ ΗΟϊσΖπΎς®υπτ Δά®υπτ ΑπΗπΖπΒπτα Νπχ„ΝπτΐπήΑϊ. ¤³π £ΗπτΖπ ΗΟϊσΖπφ Δά ΑπΗπΖπΒπτα ‹σΖπφ £‘η ΔΑπ‘ΝπΔΞπτΑπτ;DataSource=IntRate
+Prop19=Prompt=Ζπυρε„‡®υπυρΑρ³π Νπχ„Νπτ;PropType=Editable;DescTitle=Ζπυρε¶πτ‡ Νπχ¶πΒϊ ;Description=ΗΟϊσΖπΎς Ζπυρε¶πτΗπ ΆΑρ³π ²ρΐϊΑρΗπ‹³ϊ ‰’ΝπΘτ Νπχ¶πΒϊ.;DisplayType=Boolean
+/`Indicates that this account holder has to be intimated, when the deposit matures
+

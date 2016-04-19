@@ -1,0 +1,114 @@
+Deposits
+	sb			Pre
+	ca			Pre
+	pigmy			Pre
+	rd			Pre
+	fd
+		FD1
+		FD2
+	BKCC			Pre
+Loans
+	Deposit Loans
+		
+		Dep Loans 	Pre
+		RD Loans  	Pre	 	
+		Pigmy Loans 	Pre
+		
+		FD1
+		FD2		
+	Agri		
+		Agri1	
+		Agri2
+	Non-Agri			Pre
+	BKCC			Pre
+
+Profit 
+	Deposits
+		sb			Pre
+		ca			Pre				
+		pigmy			Pre
+		rd			Pre
+		fd			Pre
+			FD1
+			FD2
+		BKCC			Pre
+	Loans
+		Deposit Loans
+			Dep Loans 	Pre
+			RD Loans  	Pre	 	
+			Pigmy Loans 	Pre
+		Agri
+			Agri1
+			Agri2
+		Non-Agri
+			BKCC		Pre
+Loss 
+	Deposits
+		SB			Pre
+		CA			Pre
+		Pigmy			Pre
+		RD			Pre
+		FD			Pre
+			FD1
+			FD2
+		BKCC			Pre	
+	Loans
+		Deposit Loans
+			Dep Loans 	Pre
+			RD Loans  	Pre	 	
+			Pigmy Loans 	Pre
+		Agri
+			Agri1
+			Agri2
+		Non-Agri
+			BKCC		Pre
+Int Payabales
+	Deposits
+		Pigmy			Pre
+		RD			Pre
+			Fd1
+			Fd2
+
+
+CreateCallDepoisits
+CreateDemandDeposits
+CreateLoans
+
+Constants Declared for the Index 2000
+
+DepositSB
+DepositCA
+DepositPigmy
+DepositRD
+DepositBKCC
+
+LoansDeposit
+LoansRD
+LoansPigmy
+LoansNonAgri
+LoansBKCC
+
+ProfitDepositSB
+ProfitDepositCA
+ProfitDepositPigmy
+ProfitDepositRD
+ProfitDepositBKCC
+ProfitLoansDeposit
+ProfitLoansRD
+ProfitLoansPigmy
+ProfitLoansNonAgri
+ProfitLoansBKCC
+
+LossDepositSB
+LossDepositCA
+LossDepositPigmy
+LossDepositRD
+LossDepositBKCC
+LossLoansDeposit
+LossLoansRD
+LossLoansPigmy
+LossLoansNonAgri
+LossLoansBKCC
+
+PayAbleDepositPigmy
+PayAbleDepositRD

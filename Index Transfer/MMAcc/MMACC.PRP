@@ -1,0 +1,21 @@
+[Property Sheet]
+Prop1=Prompt=Member;PropType=Heading;SubItems=2
+Prop2=Prompt=Member Number;PropType=Editable;Description=Identifies the Member number of the member.;DescTitle=Member Number;DataSource=AccNum;DisplayType=Browse
+Prop3=Prompt=Member Name;LockEdit=True;PropType=Editable;Description=Identifies the name of the member.;DescTitle=Member Name;DisplayType=Browse;DataSource=AccName
+Prop4=Prompt=Member Type;PropType=Heading;SubItems=1
+Prop5=Prompt=Member Type;PropType=Editable;LockEdit=True;Description=Identifies the type of member.;DescTitle=Member Type;DataSource=MemberType;DisplayType=List;ListData=Regular Member,Associate Member;Nominal Member
+prop6=Prompt=Member Fee;PropType=Heading;SubItems=1
+Prop7=Prompt=Membership Fee;PropType=Editable;Description=Identifies the Membership fee of the member;DescTitle=Member Fee;DataSource=MemberFee
+Prop8=Prompt=Nominee;PropType=Heading;SubItems=3
+Prop9=Prompt=Age;PropType=Editable;Description=Identifies the customer Number of the nominee.;DescTitle=CustomerID;DataSource=NomineeID
+Prop10=Prompt=Name;PropType=Editable;Description=Identifies the name of the nominee.;DescTitle=Nominee Name;DataSource=NomineeName;DisplayType=Browse;LockEdit=True
+Prop11=Prompt=Relationship;PropType=Editable;LockEdit=True;Description=Identifies the relationship of the nominee with respect to the member.;DescTitle=Relationship;DataSource=NomineeRelation;DisplayType=List;ListData=,Mother,Father,Brother,Sister,Spouse,Son,Daughter
+Prop12=Prompt=Introducer;PropType=Heading;SubItems=2;
+Prop13=Prompt=Member number;PropType=Editable;Description=Identifies the member number of the Introducer.;DescTitle=Introducer member number.;DataSource=IntroducerID;DisplayType=Browse
+Prop14=Prompt=Name;PropType=Editable;DescTitle=Introducer name;Description=Identifies the name of the introducer.;Datasource=IntroducerName;LockEdit=True
+Prop15=Prompt=Ledger Details;PropType=Heading;SubItems=2
+Prop16=Prompt=Ledger Number;PropType=Editable;DescTitle=Ledger Number;Description=Identifies the ledger number for this member.;DataSource=LedgerNo
+Prop17=Prompt=Folio Number;PropType=Editable;DescTitle=Folio Number;Description=Identifies the folio number for thie member.;DataSource=FolioNo
+Prop18=Prompt=Creation Date;PropType=Heading;SubItems=1
+Prop19=Prompt=Creation Date;PropType=Editable;DescTitle=Creation Date;Description=Identifies the date on which this member was created.;DataSource=CreateDate
+

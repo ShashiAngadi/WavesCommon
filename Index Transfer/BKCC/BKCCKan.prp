@@ -1,0 +1,29 @@
+[LoanIssue]
+Prop1=Prompt=ΝπΑπΝπεΒπ ΖπΗπ;PropType=Heading;SubITems=2
+Prop2=Prompt=ΝρΘΑπ ²ρΐϊ Νπ®²ϊε;PropType=Editable;DescTitle=ΝρΘ ²ρΐϊ Νπ®²ϊε;Description=ΝρΘΑπ ²ρΐϊ®υπτ Νπ®²ϊε®υπτΒπτα ΒπΖπτχ•.;DataSource=AccNum
+Prop3=Prompt=ΝπΑπΝπεΒπ ΛϊσΗπτ Νπ®²ϊε;PropType=Editable;DescTitle=ΝπΑπΝπε Νπ®²ϊε;Description=ΝρΘ ΐϊ³ϊΑπτ°ϊχΚπτθΖπΖπΒπ ΝπΑπΝπε Νπ®²ϊε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DisplayType=Browse;DataSource=MemberID
+Prop4=Prompt=ΝρΘ³ρΗπΒπ ΞϊΝπΗπτ;PropType=Editable;DescTitle=Member;Description=ΝρΘ ΐϊ³ϊΑπτ°ϊχΚπτθΖπΖπΒπ ΞϊΝπΗπΒπτα Νπχ„ΝπτΐπήΑϊ.;DataSource=MemberName;LockEdit=True
+Prop5=Prompt=ΝπΑπΝπεΒπ Αώπ;PropType=Editable;DescTitle=Member;Description=„°πΠ, ΖπτΑώπεΖπτ, ΅ΑΟώπΖρ Αϊχ½πά –½πτΖπ’ΑρΗπΗπΒπτα Νπχ„ΝπτΐπήΑϊ.;DataSource=MemberType;LockEdit=True;DisplayType=List;ListData=„°πΠ –½πτΖπ’ΑρΗπ,ΖπτΑώπεΖπτ –½πτΖπ’ΑρΗπ,Αϊχ½πά –½πτΖπ’ΑρΗπ
+
+Prop6=Prompt=°ρ½π ΖπΗπ³πΚπτ;PropType=Heading;SubItems=4
+Prop7=Prompt=°ρ½π °ϊχ»Ϊ Βρ®°π;PropType=Editable;Description=ΝπΑπΝπε³ϊ °ρ½π °ϊχ»Ϊ Βρ®°πΖπΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=°ρ½π Βρ®°π;DataSource=IssueDate;DisplayType=Browse
+Prop8=Prompt=ΝρΘΑπ ³πΜπΫ τ‰;PropType=Editable;Description=ΝπΑπΝπε‹³ϊ °ϊχ½πτΖπ ΝρΘΑπ ΐρ‰ι°π ³πΜπΫ τ‰®υπτΒπτα Νπχ„ΝπτΐπήΑϊ;DescTitle=³πΜπάο ΝρΘ τ‰;DataSource=SanctionAmount
+Prop9=Prompt=ΓπζΝπ°πή ΖπΜπΑπ Ζπτ®Έχ;PropType=Editable;Description=ΝπΑπΝπε‹³ϊ ¤ ΖπΜπ °ϊχ½πτΖπ ΝρΘΑπ ³πΜπΫ τ‰®υπτΒπτα Νπχ„ΝπτΐπήΑϊ;DescTitle=³πΜπάο ΝρΘ τ‰;DataSource=CurrentSanction
+Prop10=Prompt=Ξϊ¶πτΥΖπ Ζπτ®Έχ;PropType=Editable;Description=ΝπΑπΝπε‹³ϊ ¤ ΖπΜπΑπ‘η ΝρΘΑπ ³πΜπΫ τ‰‚®ΐπ Ξϊ„ΥΒπ Ζπτ®Έχ;DescTitle=Ξϊ¶πτΥΖπ Ζπτ®Έχ;DataSource=ExtraSanction
+
+Prop11=Prompt=ΝρΘΑπ ΖπΗπ³πΚπτ;PropType=Heading;SubItems=4
+Prop12=Prompt=ΝρΘ Βπσ°πΝπτΖπ Βρ®°π;PropType=Editable;Description=ΝρΘΑπ ΖπΗπ³πΚπΒπτα Βπσ°πΝπτΖπ Βρ®°πΖπΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=Βπσ°πΗπΎ;DataSource=RenewDate;DisplayType=Browse
+Prop13=Prompt=Δά ΑπΗπ (ΝρΘ);PropType=Editable;Description=ΝρΘΑπ Δά®υπτ ΑπΗπΖπΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=Δά®υπτ ΑπΗπ;DataSource=InterestRate
+Prop14=Prompt=Απ®½πΑπ Δά ΑπΗπ;PropType=Editable;Description=ΝρΘΑπ Απ®½πΑπ Δά®υπτ ΑπΗπΖπΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=Δά®υπτ ΑπΗπ;DataSource=PenalInterestRate
+Prop15=Prompt=ΗΟϊσΖπΎς Δά ΑπΗπ ;PropType=Editable;Description=BKCC ΗΟϊσΖπΎς®υπτ Δά ΑπΗπΖπΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=ΗΟϊσΖπΎς Δά;DataSource=DepositInterestRate
+
+Prop16=Prompt=ΉρτΒπτ ΖπΗπ;PropType=Heading;SubItems=2
+Prop17=Prompt=ΖϊχΑπΘΒϊ ΉρτσΒπτΑρΗπ;PropType=Editable;Description=ΖϊχΑπΘΒϊ ΉρτσΒπτΑρΗπ ΞϊΝπΗπΒπτα Νπχ„ΝπτΐπήΑϊ;DescTitle=Guarantor1;DataSource=Guarantor1;DisplayType=Browse
+Prop18=Prompt=¨Ηπ½πΒϊ ΉρτσΒπτΑρΗπ;PropType=Editable;Description=¨Ηπ½πΒϊ ΉρτσΒπτΑρΗπΒπ ΞϊΝπΗπΒπτα Νπχ„ΝπτΐπήΑϊ;DescTitle=Guarantor2;DataSource=Guarantor2;DisplayType=Browse
+
+Prop19=Prompt=ΈτσΒπτ ΖπΗπ;PropType=Heading;SubITems=4
+Prop20=Prompt=«Ύ ΕϊσΝρ®υπτΑπ ΈτσΒπτ;PropType=Editable;DescTitle=DryLand;Description=«Ύ ΕϊσΝρ®υπτ Ζπυρ½πτΖπ Έτσ‹Βπ •ήΎΖπΒπτα ΒπΖπτχ•;DataSource=DryLand
+Prop21=Prompt=‹σΗρΖπ ΈτσΒπτ;PropType=Editable;DescTitle=‹σΗρΖπ;Description=‹σΗρΖπ £Ηπΐπ°πΠ Έτσ‹Βπ •ήΎ ΒπΖπτχ•.;DataSource=WetLand
+Prop22=Prompt=«Ύ ΕϊσΝρ®υπτΑπ ΆΑρ®υπτ;PropType=Editable;DescTitle=ΆΑρ®υπτ;Description=«Ύ ΕϊσΝρ®υπτ®Απ ΔΗπτΖπ ΆΑρ®υπτΖπΒπτα ΒπΖπτχ•;DataSource=DryIncome
+Prop23=Prompt=‹σΗρΖπ ΆΑρ®υπτ;PropType=Editable;DescTitle=ΆΑρ®υπτ ;Description=‹σΗρΖπ τ®Απ ΔΗπΐπ°πΠ ΆΑρ®υπτΖπΒπτα ΒπΖπτχ•;DataSource=WetIncome
+Prop24=Prompt=Interest Balance;PropType=Editable;DescTitle=Ερξ Δά;Description=¤ ΝρΘΑπ ²ρΐϊτ®Απ ΔΗπΕϊσ°ρΑπ Δά ΞπΎΖπΒπτα ΐϊχσΝπτΐπήΑϊ;DataSource=InterestBalance

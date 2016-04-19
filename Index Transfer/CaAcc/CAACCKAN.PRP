@@ -1,0 +1,33 @@
+[Property Sheet]
+Prop1=Prompt=²ρΐϊΑρΗπΗπ ΖπΗπ;PropType=Heading;SubItems=2
+Prop2=Prompt=²ρΐϊ Νπ®²ϊε;PropType=Editable;Description=²ρΐϊΑρΗπΒπ ²ρΐϊ Νπ®²ϊε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=²ρΐϊΑρΗπ;DataSource=AccID;DisplayType=Browse
+Prop3=Prompt=²ρΐϊΑρΗπΒπ ΞϊΝπΗπτ;LockEdit=True;PropType=Editable;Description=²ρΐϊΑρΗπΒπ ΞϊΝπΗπΒπτα Νπχ„ΝπΐπήΑϊ.;DescTitle=²ρΐϊΑρΗπΒπ ΞϊΝπΗπτ;DisplayType=Browse;DataSource=AccName
+Prop4=Prompt=ΒρΖπτ ‹Αϊσ“ΐπ;PropType=Heading;SubItems=3
+Prop5=Prompt=ΞϊΝπΗπτ;PropType=Editable;Description=ΒρΖπτ ‹Αϊσ“ΐπΒπ ΞϊΝπΗπΒπτα Νπχ„ΝπτΐπήΑϊ;DescTitle=ΒρΖπτ ‹ΑϊσΛπΒπ;DataSource=NomineeName;
+Prop6=Prompt=Ζπ®υπτΝπτμ;PropType=Editable;Description=ΒρΖπτ ‹Αϊσ“ΐπΒπ Ζπ®υπτΝπμΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=Ζπ®υπτΝπτμ;DataSource=NomineeAge
+Prop7=Prompt=Νπ®Δ®Απ;PropType=Editable;LockEdit=True;Description=²ρΐϊΑρΗπΒϊχ®³ϊ ΒρΖπτ‹Αϊσ“ΐπΒπ Νπ®Δ®ΑπΖπΒπτα Νπχ„ΝπτΐπήΑϊ;DescTitle=Νπ®Δ®Αώπ;DataSource=NomineeRelation;DisplayType=List;ListData=ΐπ®Αϊ,ΐρτ,Γπ‰,Γπ‰α,Ζπτ³π,Ζπτ³πΚπτ,ΝπΞϊχσΑπΗπ,ΝπΞϊχσΑπ,£ΐπΗϊ
+Prop8=Prompt=Έ®‡ ²ρΐϊΑρΗπΗπτ;PropType=Heading;SubItems=1;
+Prop9=Prompt=‘ΝπΪ ...;PropType=Editable;Description=Έ®‡ ²ρΐϊ®υπτ ¥’Απ ²ρΐϊΑρΗπΗπΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=Έ®‡ ²ρΐϊΑρΗπΗπτ;DisplayType=Browse;DataSource=JointHolder
+Prop10=Prompt=Γπ¶πτΝπτΖπΖπΗπτr;PropType=Heading;SubItems=2;
+Prop11=Prompt=²ρΐϊ Νπ®²ϊε;PropType=Editable;Description=Γπ¶πτΝπτΖπΖπΗπ ²ρΐϊ Νπ®²ϊε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DescTitle=Γπ¶πτΝπτΖπΖπΗπ ²ρΐϊ Νπ®²ϊϋ.;DataSource=IntroducerID;DisplayType=Browse
+Prop12=Prompt=ΞϊΝπΗπτ;PropType=Editable;DescTitle=Γπ¶πτΝπτΖπΖπΗπ ΞϊΝπΗπτ;Description=Γπ¶πτΝπτΖπΖπΗπ ΞϊΝπΗπΒπτα Νπχ„ΝπτΐπήΑϊ..;Datasource=IntroducerName;LockEdit=True
+Prop13=Prompt=Ιϊ½πΧΗπ ΖπΗπ;PropType=Heading;SubItems=3
+Prop14=Prompt=Ιϊ½πΧΗπ Νπ®²ϊε;PropType=Editable;DescTitle=Ιϊ½πΧΗπ Νπ®²ϊε;Description=Ιϊ½πΧΗπ Νπ®²ϊε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DataSource=LedgerNo
+Prop15=Prompt=Γώϊψ‘®υϊχ Νπ®²ϊε;PropType=Editable;DescTitle=Γώϊψ‘®υϊχ Νπ®²ϊε;Description=²ρΐϊ®υπτ Γώϊψ‘®υϊχ Νπ®±ε®υπτΒπτα Νπχ„ΝπτΐπήΑϊ.;DataSource=FolioNo
+Prop16=Prompt=²ρΐϊ ΐϊΗϊ®υπττΖπ Βρ®°π;PropType=Editable;DescTitle=Βρ®°π;Description=²ρΐϊ ΐϊΗϊ®υπττΖπ Βρ®°πΖπΒπτα Νπχ„ΝπτΐπήΑϊ.;DataSource=CreateDate;DisPlayType=Browse;
+Prop17=Prompt=Νπή‚ΐπΖρ‚ΗπτΖπ ²ρΐϊ;PropType=Editable;DescTitle=Νπή‚ΐπΖρ‚ΗπτΖπ ²ρΐϊ;Description=£Απτ ²ρΐϊ®υπττ Νπή‚ΐπΖρ‚Αϊ®υϊχ ΅ΑΟώπΖρ £ΘηΖϊψσ Νπχ„ΝπτΐπήΑϊ.;DataSource=InOperative;DisplayType=Boolean
+
+[Transactions]
+Cols=6
+ColWidth0=1770
+ColWidth1=1020
+ColWidth2=1020
+ColWidth3=1020
+ColWidth4=3465
+ColWidth5=3030
+
+[Balances]
+Cols=2
+ColWidth0=2115
+ColWidth1=3135
+

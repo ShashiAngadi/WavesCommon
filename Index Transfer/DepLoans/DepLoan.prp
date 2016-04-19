@@ -1,0 +1,18 @@
+[LoanIssue]
+Prop1=Prompt=Member Details;PropType=Heading;SubITems=2
+Prop2=Prompt=Member Number;PropType=Editable;DescTitle=Member;Description=Identifies the member who is seeking the loan.;DataSource=MemberId
+Prop3=Prompt=Member Name;PropType=Editable;DescTitle=Member;Description=Identifies the member who is seeking the loan.;DataSource=MemberName;LockEdit=True;DisplayType=Browse;
+Prop4=Prompt=Loan Account No;PropType=Editable;DescTitle=Loan Number;Description=Iidentifies the Loan number.;DataSource=LoanAccNo;ButtonWidth=850;ButtonCaption=Lookup...;
+Prop5=Prompt=Deposit Detail;PropType=Heading;SubItems=4
+Prop6=Prompt=Deposit Type;PropType=Editable;Description=Identifies the deposit on which loan is issueing ;DescTitle=Deposit Name;DataSource=DepositType;DisplayType=List;ListData=1,2,3
+Prop7=Prompt=Pledged Deposits;PropType=Editable;Description=Identifies the deposits that is being pledged against this loan.;DescTitle=Pledge Deposit;DataSource=PledgeDeposit;DisplayType=Browse;ButtonCaption=...;LockEdit=True
+Prop8=Prompt=Deposit Amount;PropType=Editable;Description=Worth of the item being pledged.;DescTitle=Pledge Value;DataSource=PledgeValue
+Prop9=Prompt=No of Deposits;PropType=Editable;Description=Total number of deposits the pledged items.;DescTitle=Evaluator;DataSource=NoOfDep;
+Prop10=Prompt=Loan Details;PropType=Heading;SubItems=8
+Prop11=Prompt=Issue Date;PropType=Editable;Description=Date on which this loan is issued.;DescTitle=Issue Date;DataSource=IssueDate;DisplayType=Browse;LockEdit=True
+Prop12=Prompt=Loan Amount;PropType=Editable;Description=Amount of loan to be issued as first instalment;DescTitle=Loan Amount;DataSource=LoanAmount
+Prop13=Prompt=Loan due date;PropType=Editable;Description=Due date for this loan usualy it will be maturity date of deposit .;DescTitle=due date of the loan;DataSource=DueDate;DisplayType=Browse
+Prop14=Prompt=Rate of Interest;PropType=Editable;Description=The rate of interest to be applied for this loan.;DescTitle=Rate of Interest;DataSource=InterestRate
+Prop15=Prompt=Penal interest;PropType=Editable;Description=The rate of intererst for delayed repayments.;DescTitle=Rate of penal interest;DataSource=PenalInterestRate
+Prop16=Prompt=Miscellaneous;PropType=Heading;SubItems=2
+Prop17=Prompt=Remarks;PropType=Editable;Description=A brief description about this loan;DescTitle=Remarks;DataSource=Remarks;

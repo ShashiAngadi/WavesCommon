@@ -1,0 +1,20 @@
+[Property Sheet]
+Prop1=Prompt=Account Holder;PropType=Heading;SubItems=2
+Prop2=Prompt=Account Number;PropType=Editable;Description=Identifies the Account number of the account holder.;DescTitle=Account Holder;DataSource=AccID;DisplayType=Browse
+Prop3=Prompt=Account holder name;LockEdit=True;PropType=Editable;Description=Identifies the name of the account holder.;DescTitle=Account holder name;DisplayType=Browse;DataSource=AccName
+Prop4=Prompt=Joint Account holders;LockEdit=True;PropType=Editable;Description=Select the joint account holder name., if any.;DescTitle=Joint Account holder name;DisplayType=Browse;DataSource=JointHolder
+Prop5=Prompt=Nominee;PropType=Heading;SubItems=3
+Prop6=Prompt=Nominee Customer Id;PropType=Editable;Description=Identifies the name of the nominee's customer Number;DescTitle=Nominee Customer Number;DataSource=NomineeID
+Prop7=Prompt=Name;PropType=Editable;Description=Identifies the name of the nominee.;DescTitle=Nominee name;DataSource=NomineeName;DisplayType=Browse
+Prop8=Prompt=Relationship;PropType=Editable;LockEdit=True;Description=Identifies the relationship of the nominee with respect to the Accounts holder.;DescTitle=Relationship;DataSource=NomineeRelation;DisplayType=List;ListData=,Mother,Father,Brother,Sister,Wife,Husband,Son,Daughter
+Prop9=Prompt=Introducer;PropType=Heading;SubItems=2;
+Prop10=Prompt=Customer number;PropType=Editable;Description=Identifies the customer number of the Introducer.;DescTitle=Introducer Customer ID.;DataSource=IntroducerID
+Prop11=Prompt=Name;PropType=Editable;DescTitle=Introducer name;Description=Identifies the name of the introducer.;Datasource=IntroducerName;LockEdit=True;DisplayType=Browse
+Prop12=Prompt=Ledger details;PropType=Heading;SubItems=3
+Prop13=Prompt=Ledger number;PropType=Editable;DescTitle=Ledger number;Description=Identifies the ledger number for this account.;DataSource=LedgerNo
+Prop14=Prompt=Folio number;PropType=Editable;DescTitle=Folio number;Description=Identifies the folio number for this account.;DataSource=FolioNo
+Prop15=Prompt=Deposit details;PropType=Heading;SubItems=3
+Prop16=Prompt=Creation date;PropType=Editable;DescTitle=Creation date;Description=Identifies the date on which this account was created.;DataSource=CreateDate
+Prop17=Prompt=Certificate No;PropType=Editable;DescTitle=Certificate Number;Description=Identifies Deposit's Certificate No. You change this here.;DataSource=CertificateNo
+Prop18=Prompt=Deposit interest rate;PropType=Editable;DescTitle=Rate Of Interest;Description=Here you can change the rate of interest of the existing deposit.;DataSource=IntRate
+Prop19=Prompt=Notify on maturity;PropType=Editable;DescTitle=Notify on maturity;Description=Indicates that this account holder has to be intimated, when the deposit matures.;DisplayType=Boolean

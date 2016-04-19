@@ -1,0 +1,158 @@
+[Databases]
+Database1=dbName=CAAcc;DBPath=E:\Index 2000 Total New\CAACC
+
+[CAAcc]
+;Table1=Install
+Table1=NameTab
+Table2=CAMaster
+Table3=CATrans
+Table4=NoteTab
+Table5=Setup
+Table6=CAJoint
+Table7=CAPLTrans
+Table8=ChequeMaster
+Table9=PlaceTab
+Table10=CasteTab
+Table11=UserTab
+Table12=Interesttab
+Table13=FreeCustId
+Table14=Install
+
+[CAJoint]
+Field1=FieldName=AccId;FieldType=Long;Required=True;Desc:This field identifies one of the joint account.
+Field2=FieldName=CustomerID;FieldType=Long; Required=True;Desc=This field identifies the customer
+Field3=FieldName=CustomerNum;FieldType=dbByte
+Index1=IndexName=idxAccID;Fields=AccID+CustomerID;Primary=True:Unique=True
+Index1=IndexName=idxCustID;Fields=CustomerID
+
+[CAMaster]
+Field1=FieldName=AccID;FieldType=dbLong;Required=True;AutoIncrement=True
+Field2=FieldName=CustomerID;FieldType=dbLong;Required=True
+Field3=FieldName=CreateDate;FieldType=dbDate;Required=True
+Field4=FieldName=ModifiedDate;FieldType=dbDate;
+Field5=FieldName=ClosedDate;FieldType=dbDate;
+Field6=FieldName=JointHolder;FieldType=dbText;FieldLength=100
+Field7=FieldName=Nominee;FieldType=dbText;FieldLength=50
+Field8=FieldName=Introduced;FieldType=dbLong;
+Field9=FieldName=LedgerNo;FieldType=dbText;FieldLength=10
+Field10=FieldName=FolioNo;FieldType=dbText;FieldLength=10
+Field11=FieldName=Cheques;FieldType=dbText;FieldLength=255
+Field12=FieldName=AccNum;FieldType=dbText;FieldLength=25;Required=True;New=True
+Field13=FieldName=AccGroup;FieldType=Text;FieldLength=15;Default=NULL;Desc=This field identifies the group of the account.;New=True
+Field14=FieldName=LastPrintId;FieldType=Long;Default=0;Desc=This keeps transid of sbtrans upto where printing was done.;New=True
+Field15=FieldName=NomineeId;FieldType=Long;Default=0;Desc=This keeps customer id of the nominee person.;New=True
+Field16=FieldName=InOperative;FieldType=Boolean;Default=False;Desc:This field identifies whether this account is operative or inoperative.;New=True
+Index1=IndexName=idxAccID;Fields=AccID;Primary=True;Unique=True
+Index2=IndexName=idxAccnum;Fields=AccNum;Unique=True
+
+[CATrans]
+Field1=FieldName=AccID;FieldType=dbLong;Required=True
+Field2=FieldName=TransID;FieldType=dbLong;Required=True
+Field3=FieldName=TransDate;FieldType=dbDate;Required=True
+Field4=FieldName=Amount;FieldType=dbCurrency;Required=True
+Field5=FieldName=Balance;FieldType=dbCurrency;Required=True
+Field6=FieldName=Particulars;FieldType=dbText;FieldLength=30
+Field7=FieldName=TransType;FieldType=dbInteger;Required=True
+Field8=FieldName=ChequeNo;FieldType=dbLong
+Field9=FieldName=VoucherNo;FieldType=dbText;FiledLength=10;Desc=Keep the voucher number of the transaction;New=True
+Field10=FieldName=UserID;FieldType=dbLong;Desc=Keep the user id who did this transaction;New=True
+Index1=IndexName=idxAccTrans;Fields=AccID+TransID;Primary=True;UNique=true
+
+[CAPLTrans]
+Field1=FieldName=AccID;FieldType=dbLong;Required=True
+Field2=FieldName=TransID;FieldType=dbLong;Required=True
+Field3=FieldName=TransDate;FieldType=dbDate;Required=True
+Field4=FieldName=TransType;FieldType=dbInteger;Required=True
+Field5=FieldName=Amount;FieldType=dbCurrency;Required=True
+Field6=FieldName=Balance;FieldType=dbCurrency
+Field7=FieldName=Particulars;FieldType=dbText;FieldLength=30
+Field8=FieldName=VoucherNo;FieldType=dbText;FiledLength=10;Desc=Keep the voucher number of this transaction;New=True
+Field9=FieldName=UserID;FieldType=dbLong;Desc=Keep the user id who did this transaction
+Index1=IndexName=idxAccTrans;Fields=AccID+TransID;Primary=True
+
+[Install]
+Field1=Fieldname=KeyData;FieldType=dbtext;FiledLength=50
+Field2=Fieldname=ValueData;FieldType=dbtext;FiledLength=255
+
+[ChequeMaster]
+Field1=FieldName=ChequeNo;FieldType=dbLong;Required=True;Default=False;Desc:This filed identifies the cheque NO.
+Field2=FieldName=SeriesNo;FieldType=dbText;FieldLength=10;Desc=This field identifies the series of the cheque No or cheeqe Book
+Field3=FieldName=AccId;FieldType=Long;Required=True;Desc=This keeps information of the account no of the cheque issued.
+Field4=FieldName=AccType;FieldType=dbText;FieldLength=15;Required=TrueDesc=This field identifies the account type like Sb, Current, OD.
+Field5=FieldName=IssuedDate;FieldType=dbDate;Desc=Information of the cheque issue date.
+Field6=FieldName=Trans;FieldType=dbByte;Desc= -1 for cheque issue;1 for cheque cleared 3 for stop payment 4 for lost.
+Field7=FieldName=Amount;FieldType=dbCurrency; Desc=Keeps the information of the cheque amount. If amount is 0 then it means cheque has lost or returned to the bank.
+Field8=FieldName=TransDate;FieldType=dbDate;Desc=Day on which date the payment has made to this cheque.
+Field9=FieldName=Particulars;FieldType=dbText;FiledLength=100;Desc=Details of transaction
+Index1=IndexName=idxCheque;Fields=ChequeNo+SeriesNo;Primary=True;Unique=True
+
+[NoteTab]
+Field1=FieldName=ModuleID;Fieldtype=dbInteger
+Field2=FieldName=NoteID;Fieldtype=dbLong
+Field3=FieldName=Notes;FieldType=dbText;FieldType=30;
+Field4=FieldName=NoteType;FieldType=dbByte;
+Field5=FieldName=AccID;Fieldtype=dbLong;
+Index1=IndexName=idxNotes;Fields=ModuleID+NoteID;Primary=True
+
+[Setup]
+Field1=FieldName=SetupID;FieldType=dbLong;Required=True;
+Field2=FieldName=Module;Fieldtype=dbText;FieldLength=20;Required=True
+Field3=FieldName=Key;FieldType=dbText;FieldLength=20;Required=True
+Field4=FieldName=Val;FieldType=dbText;FieldLength=20;Required=True
+Index1=IndexName=idxSetup;Fields=SetupID;Primary=True
+
+[PlaceTab]
+Field1=FieldName=Place;FieldType=dbText;FieldLength=30;
+
+[CasteTab]
+Field1=FieldName=Caste;FieldType=dbText;FieldLength=30;
+
+[NameTab]
+Field1=FieldName=CustomerID;Fieldtype=dbLong;Required=True;AutoIncrement=True
+Field2=FieldName=Title;FieldType=dbText;FieldLength=10
+Field3=FieldName=FirstName;FieldType=dbText;FieldLength=20;
+Field4=FieldName=MiddleName;FieldType=dbText;FieldLength=20;
+Field5=FieldName=LastName;FieldType=dbText;FieldLength=20;
+Field6=FieldName=Gender;FieldType=dbByte;Required=True
+Field7=FieldName=Profession;FieldType=dbText;FieldLength=50;
+Field8=FieldName=Caste;FieldType=dbText;FieldLength=30;
+Field9=FieldName=DOB;FieldType=dbDate;
+Field10=FieldName=MaritalStatus;FieldType=dbByte;
+Field11=FieldName=HomeAddress;FieldType=dbText;FieldLength=60
+Field12=FieldName=OfficeAddress;FieldType=dbText;FieldLength=60
+Field13=FieldName=HomePhone;FieldType=dbText;FieldLength=30
+Field14=FieldName=OfficePhone;FieldType=dbText;FieldLength=30
+Field15=FieldName=eMail;FieldType=dbText;FieldLength=255
+Field16=FieldName=Place;FieldType=dbText;FieldLength=30
+Field17=FieldName=Reference;FieldType=dbInteger;Required=True
+Field18=FieldName=IsciName;FieldType=dbText;FieldLength=20
+Index1=IndexName=idxCustomerID;Fields=CustomerID;Primary=True
+
+
+[UserTab]
+Field1=FieldName=UserID;FieldType=dbLong;Required=True;
+Field2=FieldName=CustomerID;FieldType=dbLong;Required=True;
+Field3=FieldName=LoginName;FieldType=dbText;FieldLength=20;Required=True;
+Field4=FieldName=Password;FieldType=dbText;FieldLength=20;Required=True;
+Field5=FieldName=Permissions;FieldType=dbLong;Required=True;
+Field6=FieldName=CreateDate;FieldType=dbLong
+Field7=FieldName=Deleted;FieldType=dbBoolean
+Field8=FieldName=ClosedDate;FieldType=dbDate
+
+[InterestTab]
+Field1=FieldName=TransId;FieldType=dbLong;
+Field2=FieldName=ModuleId;FieldType=dbInteger;Required=True
+Field3=FieldName=SchemeName;FieldType=dbText;FieldLength=50
+Field4=FieldName=InterestRate;FieldType=dbsingle;Required=True
+Field5=FieldName=StartDate;FieldType=dbDate;Required=True
+Field6=FieldName=EndDate;FieldType=dbDate
+Index1=IndexName=IndxModuleInt;fields=TransId+ModuleId+SchemeName;Primary=True
+
+[FreeCustId]
+field1=FieldName=FreeId;FieldType=dbLong
+Field2=fieldName=Selected;FieldType=dbBoolean
+
+[Relations]
+Relation1=RelationName=RelnCaMaster;Field=CustomerID;ForiegnTable=CAMaster;SourceTable=NameTab
+Relation2=RelationName=RelnCATrans;Field=AccID;ForiegnTable=CATrans;SourceTable=CAMaster
+Relation3=RelationName=RelnCAPLAcc;Field=AccID+TransID;ForiegnTable=CAPLTrans;SourceTable=CATrans

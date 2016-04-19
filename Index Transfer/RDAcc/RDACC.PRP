@@ -1,0 +1,25 @@
+[Property Sheet]
+Prop1=Prompt=Account Holder;PropType=Heading;SubItems=2
+Prop2=Prompt=Account Number;PropType=Editable;Description=Identifies the Account number of the account holder.;DescTitle=Account Holder;DataSource=AccNum;DisplayType=Browse
+Prop3=Prompt=Account holder name;LockEdit=True;PropType=Editable;Description=Identifies the name of the account holder.;DescTitle=Account holder name;DisplayType=Browse;DataSource=AccName
+Prop4=Prompt=Joint Account holder;LockEdit=True;PropType=Editable;Description=Identifies the name of the account holder.;DescTitle=Joint holder name;DisplayType=Browse;DataSource=JointHolder
+Prop5=Prompt=Nominee;PropType=Heading;SubItems=3
+Prop6=Prompt=Nominee Cust ID ;PropType=Editable;Description=Identifies customer Id of the nominee.;DescTitle=Nomine Cust No;DataSource=NomineeID
+Prop7=Prompt=Name;PropType=Editable;Description=Identifies the name of the nominee.;DescTitle=Nominee name;DataSource=NomineeName;DisplayType=Browse
+Prop8=Prompt=Relationship;PropType=Editable;LockEdit=True;Description=Identifies the relationship of the nominee with respect to the Account holder.;DescTitle=Relationship;DataSource=NomineeRelation;DisplayType=List;ListData=Unspecified,Mother,Father,Brother,Sister,Spouse,Son,Daughter,Others
+Prop9=Prompt=Recurring Deposit;PropType=Heading;SubItems=4
+Prop10=Prompt=R D Amount;PropType=Editable;Description=Monthly Installment Amount Of Reccuring Deposit.;DescTitle=Installment Amount;DataSource=RDAmount
+Prop11=Prompt=Number OfInstallments;PropType=Editable;Description=No of Months To deposit.;DescTitle=Total No Of Installments .;DataSource=NoOfInst
+Prop12=Prompt=Rate Of Interest;PropType=Editable;LockEdit=True;Description=Rate Of Interest To Be Charged.;DescTitle=Interest Rate Levied By Bank For RD Account.;DataSource=RateOfInterest
+Prop13=Prompt=Maturity Date;PropType=Editable;Description=Maturity Date For this RD Acc.;DescTitle=Maturity Date Identification.;DataSource=MaturityDate;DisplayType=Browse
+Prop14=Prompt=Introducer;PropType=Heading;SubItems=2;
+Prop15=Prompt=Introducer Cust number;PropType=Editable;Description=Identifies the Customer number of the Introducer.;DescTitle=Introducer account number.;DataSource=IntroducerID
+Prop16=Prompt=Name;PropType=Editable;DescTitle=Introducer name;Description=Identifies the name of the introducer.;Datasource=IntroducerName;LockEdit=True;DisplayType=Browse
+Prop17=Prompt=Ledger details;PropType=Heading;SubItems=3
+Prop18=Prompt=Ledger number;PropType=Editable;DescTitle=Ledger number;Description=Identifies the ledger number for this account.;DataSource=LedgerNo
+Prop19=Prompt=Folio number;PropType=Editable;DescTitle=Folio number;Description=Identifies the folio number for this account.;DataSource=FolioNo
+Prop20=Prompt=Creation date;PropType=Editable;DescTitle=Creation date;Description=Identifies the date on which this account was created.;DataSource=CreateDate;DisplayType=Browse
+Prop21=Prompt=Notify on Maturity;PropType=Editable;DescTitle=Notice On Maturity;Description=Instruction To bank to inform the customer while maturing.;DisplayType=Boolean;DataSource=Notify
+Prop22=Prompt=InOperative Account;PropType=Editable;DescTitle=Inoperative Account Íð÷¶ðÂú;Description=Identifies whther account is operative or not.;DisplayType=Boolean;DataSource=Operative
+
+
