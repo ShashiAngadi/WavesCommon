@@ -1,0 +1,783 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "clsBankAcc"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = False
+Option Explicit
+
+Public Sub AddPigmyCommission(Amount As Currency, IndianTransDate As String, Description As String)
+Dim TransID As Long
+Dim TransType As wisTransactionTypes
+
+'Get The MaxTransID
+gDBTrans.SQLStmt = "Select max(TransID) From AccTrans Where AccId = 6002 " & _
+                " And TransDate < #" & FormatDate(IndianTransDate) & "#"
+
+If gDBTrans.SQLFetch > 0 Then
+    TransID = Val(FormatField(gDBTrans.Rst(0))) + 1
+    ' While Data Feeding The Date May Vary so UpDate the TransID by 1
+    gDBTrans.BeginTrans
+    gDBTrans.SQLStmt = "UpDate AccTrans Set TransID = TransId + 1 Where  AccID = 6002 " & _
+            " And TransID >= " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    
+    gDBTrans.CommitTrans
+Else
+    TransID = 1
+End If
+    
+    gDBTrans.BeginTrans
+    
+    TransType = wInterest
+    'Only in this case Profit is referring as wCharges so
+    'For Explanatiton Refer ClsBankAcc.Profit
+    TransType = wCharges
+    gDBTrans.SQLStmt = "Insert Into AccTrans (AccId,TransID,TransType, " & _
+                                " Amount, Particulars, TransDate,Balance) Values " & _
+                                " ( 6002," & TransID & ", " & TransType & ", " & _
+                                Amount & ", '" & Description & "', " & _
+                                " #" & FormatDate(IndianTransDate) & "# ,0)"
+        If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+
+Exit_Line:
+
+End Sub
+Public Sub UndoPigmyCommission(IndianTransDate As String, Description As String)
+
+Dim TransID As Long
+Dim TransType As wisTransactionTypes
+
+'Get The TransID
+gDBTrans.SQLStmt = "Select TransID From AccTrans Where AccId = 6002 " & _
+                " And TransDate = #" & FormatDate(IndianTransDate) & "#" & _
+                " And Particulars = '" & Description & "'"
+
+If gDBTrans.SQLFetch < 1 Then GoTo Exit_Line
+
+    TransID = Val(FormatField(gDBTrans.Rst(0)))
+    
+    gDBTrans.BeginTrans
+    gDBTrans.SQLStmt = "Delete * From AccTrans Where " & _
+                            " AccID = 6002 And TransID = " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    
+    gDBTrans.SQLStmt = "UpDate AccTrans Set TransID = TransId -1 " & _
+                " Where  AccID = 6002 And TransID > " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+
+Exit_Line:
+
+End Sub
+'
+
+
+Public Sub UndoAddInterestPayble(IndianTransDate As String, Description As String, DepositType As Integer)
+
+Dim TransID As Long
+Dim TransType As wisTransactionTypes
+Dim Amount As Currency
+Dim AccountID As Long
+
+'''Check for type of deposit if deposittype is 1 then  FD, if deposittype is 2 then PD
+'''or if deposittype is 3 then RD
+If DepositType = 1 Then
+    AccountID = 13001
+ElseIf DepositType = 2 Then
+    AccountID = 13002
+ElseIf DepositType = 3 Then
+    AccountID = 13003
+End If
+
+'Get The TransID
+gDBTrans.SQLStmt = "Select TransID,Amount From AccTrans Where AccId =  " & AccountID & _
+                " And TransDate = #" & FormatDate(IndianTransDate) & "#" & _
+                " And Particulars = '" & Description & "'"
+
+If gDBTrans.SQLFetch < 1 Then GoTo Exit_Line
+
+    TransID = Val(FormatField(gDBTrans.Rst("TransID")))
+    Amount = Val(FormatField(gDBTrans.Rst("Amount")))
+    gDBTrans.BeginTrans
+    gDBTrans.SQLStmt = "Delete * From AccTrans Where " & _
+                            " AccID = " & AccountID & " And TransID = " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    
+    gDBTrans.SQLStmt = "UpDate AccTrans Set TransID = TransId -1, Balance = balance - " & Amount & _
+                " Where  AccID = " & AccountID & " And TransID > " & TransID & " And Transid <> 1"
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+
+Exit_Line:
+
+End Sub
+'
+Public Sub UndoRemoveInterestPayble(IndianTransDate As String, Description As String, DepositType As Integer)
+
+Dim TransID As Long
+Dim TransType As wisTransactionTypes
+Dim Amount As Currency
+Dim AccountID As Long
+
+'''Check for type of deposit if deposittype is 1 then  FD, if deposittype is 2 then PD
+'''or if deposittype is 3 then RD
+If DepositType = 1 Then
+    AccountID = 13001
+ElseIf DepositType = 2 Then
+    AccountID = 13002
+ElseIf DepositType = 3 Then
+    AccountID = 13003
+End If
+
+'Get The TransID
+gDBTrans.SQLStmt = "Select TransID,Amount From AccTrans Where AccId = " & AccountID & _
+                " And TransDate = #" & FormatDate(IndianTransDate) & "#" & _
+                " And Particulars = '" & Description & "'"
+
+If gDBTrans.SQLFetch < 1 Then GoTo Exit_Line
+
+    TransID = Val(FormatField(gDBTrans.Rst("TransID")))
+    Amount = Val(FormatField(gDBTrans.Rst("Amount")))
+    
+    gDBTrans.BeginTrans
+    gDBTrans.SQLStmt = "Delete * From AccTrans Where " & _
+                            " AccID = " & AccountID & " And TransID = " & TransID
+    
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+
+    gDBTrans.SQLStmt = "UpDate AccTrans Set TransID = TransId -1, Balance = Balance + " & Amount & _
+                " Where  AccID = " & AccountID & " And TransID > " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+
+Exit_Line:
+
+End Sub
+Public Sub UPDateMiscLoss(LossAmount As Currency, IndianTransDate As String)
+Dim TransID As Long
+Dim TransType As wisTransactionTypes
+
+'Get The MaxTransID
+gDBTrans.SQLStmt = "Select max(TransID) From AccTrans Where AccId = 6001 " & _
+                " And TransDate < #" & FormatDate(IndianTransDate) & "#"
+
+If gDBTrans.SQLFetch > 0 Then
+    TransID = Val(FormatField(gDBTrans.Rst(0))) + 1
+    ' While Dat Feeding The Datre May Vary so UpDate the TransID by 1
+    gDBTrans.BeginTrans
+    gDBTrans.SQLStmt = "UpDate AccTrans TransID = TransId + 1 Where  AccID = 6000 And TransID >= " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    
+    gDBTrans.CommitTrans
+Else
+    TransID = 1
+End If
+    
+    gDBTrans.BeginTrans
+    TransType = wInterest
+    'Only in this case Loss is referring as WInterest so
+    'For Explanatiton Refer ClsBankAcc.Profit
+    TransType = wCharges
+    
+    gDBTrans.SQLStmt = "Insert Into AccTrans (AccId,TransID,TransType, Amount, Particulars, TransDate) Values " & _
+                                " ( 6001," & TransID & ", " & TransType & ", " & LossAmount & ", 'By other Module  " & _
+                                " #" & FormatDate(IndianTransDate) & "# )"
+    
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+Exit_Line:
+
+End Sub
+
+
+' This Functionm Wil Update The Misceleneous Account
+'If AMOUNT COLLECETED AS MISCELENEOUS AMOUNT THAT WILL be credited to Misceleeneous account
+Public Sub UPDateMiscProfit(ProfitAmount As Currency, IndianTransDate As String, Decription As String)
+
+Dim TransID As Long
+Dim TransType As wisTransactionTypes
+
+'Get The MaxTransID
+gDBTrans.SQLStmt = "Select max(TransID) From AccTrans Where AccId = 5001 " & _
+                " And TransDate < #" & FormatDate(IndianTransDate) & "#"
+
+If gDBTrans.SQLFetch > 0 Then
+    TransID = Val(FormatField(gDBTrans.Rst(0))) + 1
+    ' While Data Feeding The Date May Vary so UpDate the TransID by 1
+    gDBTrans.BeginTrans
+    gDBTrans.SQLStmt = "UpDate AccTrans Set TransID = TransId + 1 Where  AccID = 5001 And TransID >= " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    
+    gDBTrans.CommitTrans
+Else
+    TransID = 1
+End If
+    
+    gDBTrans.BeginTrans
+    
+    TransType = wCharges
+    'Only in this case Profit is referring as wCharges so
+    'For Explanatiton Refer ClsBankAcc.Profit
+    TransType = wInterest
+    gDBTrans.SQLStmt = "Insert Into AccTrans (AccId,TransID,TransType, Amount, Particulars, TransDate,Balance) Values " & _
+                                " ( 5001," & TransID & ", " & TransType & ", " & ProfitAmount & ", '" & Decription & "', " & _
+                                " #" & FormatDate(IndianTransDate) & "# ,0)"
+        If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+
+Exit_Line:
+
+End Sub
+
+
+
+' This Functionm Wil Update The Interest Amount till 31/3/yyyy on FD Deposits
+' AMOUNT COLLECETED AS WILL be credited to "Interest Payble" Account
+Public Sub AddInterestPayble(Amount As Currency, IndianTransDate As String, Decription As String, DepositType As Integer)
+Dim TransID As Long
+Dim Balance As Currency
+Dim TransType As wisTransactionTypes
+Dim AccountID As Long
+
+'''Check for type of deposit if deposittype is 1 then  FD, if deposittype is 2 then PD
+'''or if deposittype is 3 then RD
+If DepositType = 1 Then AccountID = 13001
+If DepositType = 2 Then AccountID = 13002
+If DepositType = 3 Then AccountID = 13003
+
+'Get The MaxTransID
+gDBTrans.SQLStmt = "Select TransID, TransDate,Balance From AccTrans " & _
+    " Where AccId = " & AccountID & " And TransId = " & _
+        "(Select MAX(TransID) From AccTrans Where AccId = " & AccountID & " )"
+
+If gDBTrans.SQLFetch > 0 Then
+    TransID = Val(FormatField(gDBTrans.Rst(0))) + 1
+   'See if the date is earlier than last date of transaction
+    If WisDateDiff(FormatField(gDBTrans.Rst("TransDate")), IndianTransDate) < 0 Then
+        'MsgBox "You have specified a transaction date that is earlier than the last date of transaction !", vbExclamation, gAppName & " - Error"
+        MsgBox LoadResString(gLangOffSet + 572), vbExclamation, gAppName & " - Error"
+'''        Exit Sub
+    End If
+    Balance = Val(FormatField(gDBTrans.Rst("Balance")))
+Else
+    TransID = 2
+End If
+    Balance = Balance + Amount
+    gDBTrans.BeginTrans
+    
+'''    TransType = wContraDeposit
+    'Only in this case Profit is referring as wCharges so
+    'For Explanatiton Refer ClsBankAcc.Profit
+    TransType = wContraDeposit
+    gDBTrans.SQLStmt = "Insert Into AccTrans (AccId,TransID,TransType, Amount, " & _
+                    " Particulars, TransDate,Balance) Values " & _
+                    " ( " & AccountID & "," & TransID & ", " & TransType & ", " & _
+                    Amount & ", '" & Decription & "', " & _
+                    " #" & FormatDate(IndianTransDate) & "# ," & _
+                    Balance & " )"
+                    
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+
+Exit_Line:
+
+End Sub
+'
+' This Functionm Wil Update The Interest Amount till 31/3/yyyy on FD Deposits
+' AMOUNT COLLECETED AS WILL be credited to "Interest Payble" Account
+Public Sub RemoveInterestPayble(Amount As Currency, IndianTransDate As String, Decription As String, DepositType As Integer)
+Dim TransID As Long
+Dim Balance As Currency
+Dim TransType As wisTransactionTypes
+Dim AccountID As Long
+
+'''Check for type of deposit if deposittype is 1 then  FD, if deposittype is 2 then PD
+'''or if deposittype is 3 then RD
+If DepositType = 1 Then
+    AccountID = 13001
+ElseIf DepositType = 2 Then
+    AccountID = 13002
+ElseIf DepositType = 3 Then
+    AccountID = 13003
+End If
+
+'Get The MaxTransID
+gDBTrans.SQLStmt = "Select TransID, TransDate,Balance From AccTrans Where AccId = " & AccountID & _
+                " And TransId = (Select max(TransID) From AccTrans Where AccId = " & AccountID & _
+                " And TransDate < #" & FormatDate(IndianTransDate) & "# )"
+
+
+If gDBTrans.SQLFetch > 0 Then
+    
+    TransID = Val(FormatField(gDBTrans.Rst(0))) + 1
+    Balance = Val(FormatField(gDBTrans.Rst("Balance")))
+    
+    If Balance - Amount < 0 Then
+        MsgBox "Insufficient Balance in 'INTEREST PAYBLE Account", vbInformation, wis_MESSAGE_TITLE
+        Exit Sub
+        
+    End If
+       ' While Data Feeding The Date May Vary so UpDate the TransID by 1
+    gDBTrans.BeginTrans
+    gDBTrans.SQLStmt = "UpDate AccTrans Set TransID = TransId + 1,Balance=Balance - " & Amount & _
+            " Where  AccID = " & AccountID & " And TransID >= " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+    
+Else
+    TransID = 1
+End If
+
+    Balance = Balance - Amount
+    If Balance < 0 Then
+        MsgBox "Insufficient Balance in 'INTEREST PAYBLE Account", vbInformation, wis_MESSAGE_TITLE
+        Exit Sub
+    End If
+    
+    
+    gDBTrans.BeginTrans
+    
+    TransType = wContraWithdraw
+    'Only in this case Profit is referring as wCharges so
+    'For Explanatiton Refer ClsBankAcc.Profit
+    gDBTrans.SQLStmt = "Insert Into AccTrans (AccId,TransID,TransType, Amount, Particulars, TransDate,Balance) Values " & _
+                                " ( " & AccountID & ", " & TransID & ", " & TransType & ", " & Amount & ", '" & Decription & "', " & _
+                                " #" & FormatDate(IndianTransDate) & "# ," & Balance & " )"
+        If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+
+Exit_Line:
+
+End Sub
+Public Sub UndoUPDatedMiscLoss(IndianTransDate As String, Decription As String)
+
+Dim TransID As Long
+Dim TransType As wisTransactionTypes
+
+'Get The TransID
+gDBTrans.SQLStmt = "Select TransID From AccTrans Where AccId = 6001 " & _
+                " And TransDate = #" & FormatDate(IndianTransDate) & "#" & _
+                " And Particulars = '" & Decription & "'"
+
+If gDBTrans.SQLFetch < 1 Then GoTo Exit_Line
+
+
+    TransID = Val(FormatField(gDBTrans.Rst(0)))
+    
+    gDBTrans.BeginTrans
+    gDBTrans.SQLStmt = "Delete * From AccTrans " & _
+            " Where AccID = 6001 And TransID = " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    
+    gDBTrans.SQLStmt = "UpDate AccTrans Set TransID = TransId -1 " & _
+                " Where  AccID = 6001 And TransID > " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+
+Exit_Line:
+
+End Sub
+
+Public Sub UndoUPDatedMiscProfit(IndianTransDate As String, Decription As String)
+
+Dim TransID As Long
+Dim TransType As wisTransactionTypes
+
+'Get The TransID
+gDBTrans.SQLStmt = "Select TransID From AccTrans Where AccId = 5001 " & _
+                " And TransDate = #" & FormatDate(IndianTransDate) & "#" & _
+                " And Particulars = '" & Decription & "'"
+
+If gDBTrans.SQLFetch < 1 Then GoTo Exit_Line
+
+
+    TransID = Val(FormatField(gDBTrans.Rst(0)))
+    
+    gDBTrans.BeginTrans
+    gDBTrans.SQLStmt = "Delete * From AccTrans Where  AccID = 5001 " & _
+                            " And TransID = " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    
+    gDBTrans.CommitTrans
+    
+    gDBTrans.BeginTrans
+    
+    gDBTrans.SQLStmt = "UpDate AccTrans Set TransID = TransId -1  " & _
+                " Where  AccID = 5001 And TransID > " & TransID
+    If Not gDBTrans.SQLExecute Then
+        gDBTrans.RollBack
+        GoTo Exit_Line
+    End If
+    gDBTrans.CommitTrans
+
+Exit_Line:
+
+End Sub
+
+
+
+Private Sub Class_Initialize()
+    'Set M_frmAcc = New frmBankAcc
+End Sub
+
+
+Private Sub Class_Terminate()
+    'Set M_frmAcc = Nothing
+End Sub
+
+Public Function Balance(AsOnIndiandate As String, HeadId As Long) As Currency
+'Trap an Error
+ On Error GoTo ErrLine
+    
+gDBTrans.SQLStmt = "Select  TransType, Balance from AccTrans  where TransID  =  " & _
+        " (Select MAX  (TransID) from AccTrans   where " & _
+        " Transdate <= #" & AsOnIndiandate & "# and " & _
+        " accId  = " & HeadId & " ) And AccId = " & HeadId
+                                 
+If gDBTrans.SQLFetch < 1 Then Exit Function
+Balance = FormatField(gDBTrans.Rst.fields("Balance"))
+
+ExitLine:
+    Exit Function
+ErrLine:
+        If Err Then
+            MsgBox "Balance: " & vbCrLf & Err.Description, vbCritical
+            GoTo ExitLine
+        End If
+        
+End Function
+
+Public Function Loss(FromIndianDate As String, ToIndianDate As String, HeadId As Long) As Currency
+        'Declare variables
+Dim TransType As wisTransactionTypes
+Dim TempLoss As Currency
+    TransType = wInterest
+    TempLoss = TransactionDetails(FromIndianDate, ToIndianDate, HeadId, TransType)
+    TransType = wContraInterest
+    Loss = TempLoss + TransactionDetails(FromIndianDate, ToIndianDate, HeadId, TransType)
+End Function
+Public Function ContraLoss(FromIndianDate As String, ToIndianDate As String, HeadId As Long) As Currency
+        'Declare variables
+        Dim TransType As wisTransactionTypes
+        
+        '''This wContraDeposit has been provided exclusively for Interest Payable Accounts
+        TransType = wContraDeposit
+        ContraLoss = TransactionDetails(FromIndianDate, ToIndianDate, HeadId, TransType)
+
+End Function
+
+Public Function ContraProfit(FromIndianDate As String, ToIndianDate As String, HeadId As Long) As Currency
+        'Declare variables
+        Dim TransType As wisTransactionTypes
+        
+        TransType = wContraCharges
+        ContraProfit = TransactionDetails(FromIndianDate, ToIndianDate, HeadId, TransType)
+
+End Function
+
+
+Private Function TransactionDetails(FromIndianDate As String, ToIndianDate As String, HeadId As Long, TransType As wisTransactionTypes) As Currency
+'Trap an error
+On Error GoTo ErrLine
+    gDBTrans.SQLStmt = " Select Sum(Amount) as Deposits from ACCTrans where " & _
+        " AccId = " & HeadId & " And TransType = " & TransType & _
+        " AND TransDate Between #" & FormatDate(FromIndianDate) & "#" & _
+        " And #" & FormatDate(ToIndianDate) & "#"
+
+If gDBTrans.SQLFetch < 1 Then Exit Function
+
+TransactionDetails = Val(FormatField(gDBTrans.Rst(0)))
+
+ExitLine:
+    Exit Function
+    
+
+ErrLine:
+    If Err Then
+        MsgBox "TransactionDetails :" & vbCrLf & Err.Description
+        GoTo ExitLine
+    End If
+
+End Function
+
+Public Function WithDrawls(FromIndianDate As String, ToIndianDate As String, HeadId As Long) As Currency
+' Profit = 1976
+  Dim TransType As wisTransactionTypes
+
+WithDrawls = 0
+TransType = wWithDraw
+        'Here for the loss we have to consider  wCharges not wInterest
+        ' Beacause these accounts are running w.r.t to accounts nor w.r.t Bank
+        'If any frofit made i.e to the Account Type( not indiviual Account)
+        ' Fro Eg If A profit mad e In SB or CA it is aso tho the Account Type Not to the Bank
+        ' But In othere Account Types the profit is Also profit of Bank
+        ' Here In Bank Accounts the Case is Reverse
+        ' Bank makes transactions as a Customer  to these type of accounts
+        
+        'SO for the loss We have consider wChareges Not wInterest
+'''TransType = wDeposit
+If Not DateValidate(FromIndianDate, "/", True) Then Exit Function
+If Not DateValidate(ToIndianDate, "/", True) Then Exit Function
+
+WithDrawls = TransactionDetails(FromIndianDate, ToIndianDate, HeadId, TransType)
+  
+End Function
+
+Public Function Profit(FromIndianDate As String, ToIndianDate As String, HeadId As Long) As Currency
+' To trap an error
+On Error GoTo ErrLine
+'Declare variables
+Dim TransType As wisTransactionTypes
+Dim TempProfit As Currency
+TransType = wCharges
+
+'We have to count any contra Transactions Also
+    TempProfit = TransactionDetails(FromIndianDate, ToIndianDate, HeadId, TransType)
+    TransType = wContraCharges
+    Profit = TempProfit + TransactionDetails(FromIndianDate, ToIndianDate, HeadId, TransType)
+ExitLine:
+    Exit Function
+ErrLine:
+    If Err Then
+        MsgBox "Profit: " & vbCrLf & Err.Description, vbCritical
+        GoTo ExitLine
+    End If
+
+End Function
+
+
+Public Function Deposits(FromIndianDate As String, ToIndianDate As String, HeadId As Long) As Currency
+'Trap an error
+On Error GoTo ErrLine
+Dim TransType As wisTransactionTypes
+Deposits = 0
+
+TransType = wDeposit
+        'Here for the loss we have to consider  wCharges not wInterest
+        ' Beacause these accounts are running w.r.t to accounts nor w.r.t Bank
+        'If any frofit made i.e to the Account Type( not indiviual Account)
+        ' Fro Eg If A profit mad e In SB or CA it is aso tho the Account Type Not to the Bank
+        ' But In othere Account Types the profit is Also profit of Bank
+        ' Here In Bank Accounts the Case is Reverse
+        ' Bank makes transactions as a Customer  to these type of accounts
+        
+        'SO for the loss We have consider wChareges Not wInterest
+
+'''TransType = wWithDraw
+Deposits = TransactionDetails(FromIndianDate, ToIndianDate, HeadId, TransType)
+
+ExitLine:
+    Exit Function
+ErrLine:
+        If Err Then
+            MsgBox "Deposits:" & vbCrLf & Err.Description, vbCritical
+            GoTo ExitLine
+        End If
+End Function
+
+
+Public Function Heads_Advance(Heads() As String, HeadId() As Long) As Integer
+    ReDim Heads(0): ReDim HeadId(0)
+    Heads_Advance = GetHeadNames(Heads, HeadId, wis_AdvanceHead)
+    
+End Function
+Public Function Heads_MemberDeposits(Heads() As String, HeadId() As Long) As Integer
+    ReDim Heads(0): ReDim HeadId(0)
+   Heads_MemberDeposits = GetHeadNames(Heads, HeadId, wis_MemberDeposits)
+ End Function
+
+
+Public Function Heads_ReserveFund(Heads() As String, HeadId() As Long) As Integer
+    ReDim Heads(0): ReDim HeadId(0)
+    Heads_ReserveFund = GetHeadNames(Heads, HeadId, wis_ReserveFundHead)
+ End Function
+
+Public Function Heads_Investments(Heads() As String, HeadId() As Long) As Integer
+    ReDim Heads(0): ReDim HeadId(0)
+    Heads_Investments = GetHeadNames(Heads, HeadId, wis_InvestmentHead)
+ End Function
+
+
+Public Function Heads_TradingIncome(Heads() As String, HeadId() As Long) As Integer
+    ReDim Heads(0): ReDim HeadId(0)
+    Heads_TradingIncome = GetHeadNames(Heads, HeadId, wis_TradingIncomeHead)
+    
+End Function
+Public Function Heads_ShareCapital(Heads() As String, HeadId() As Long) As Integer
+    
+    Heads_ShareCapital = GetHeadNames(Heads, HeadId, wis_ShareCapitalHead)
+    
+End Function
+Public Function Heads_Income(Heads() As String, HeadId() As Long) As Integer
+    ReDim Heads(0): ReDim HeadId(0)
+    Heads_Income = GetHeadNames(Heads, HeadId, wis_IncomeHead)
+    
+End Function
+
+
+Public Function SubHeads(MianHeadId As Long, Heads() As String, HeadId() As Long) As Integer
+    ReDim Heads(0): ReDim HeadId(0)
+    SubHeads = GetHeadNames(Heads, HeadId, MianHeadId)
+    
+End Function
+
+
+Public Function Heads_BankLoan(Heads() As String, HeadId() As Long) As Integer
+    ReDim Heads(0): ReDim HeadId(0)
+    Heads_BankLoan = GetHeadNames(Heads, HeadId, wis_BankLoanHead)
+    
+End Function
+Public Function Heads_BankAccounts(HeadsName() As String, HeadId() As Long) As Integer
+    
+    Heads_BankAccounts = GetHeadNames(HeadsName, HeadId, wis_BankHead)
+    
+End Function
+Public Function Heads_Payments(HeadsName() As String, HeadId() As Long) As Integer
+    
+    Heads_Payments = GetHeadNames(HeadsName, HeadId, wis_PaymentHead)
+    
+End Function
+Public Function Heads_Asset(HeadsName() As String, HeadId() As Long) As Integer
+    
+    Heads_Asset = GetHeadNames(HeadsName, HeadId, wis_AssetHead)
+    
+End Function
+
+Public Function Heads_Repayments(HeadsName() As String, HeadId() As Long) As Integer
+    
+    Heads_Repayments = GetHeadNames(HeadsName, HeadId, wis_RepaymentHead)
+    
+End Function
+
+
+Public Function MainHeads(HeadsName() As String, HeadId() As Long) As Integer
+ReDim HeadNames(0)
+ReDim HeadIds(0)
+    
+    gDBTrans.SQLStmt = "Select * From AccMaster Where AccId mod " & wis_BankHeadOffSet & " = 0 "
+    Dim RetLng As Long
+    RetLng = gDBTrans.SQLFetch
+    If RetLng < 1 Then Exit Function
+    
+    Dim Rst As Recordset
+    Set Rst = gDBTrans.Rst.Clone
+    
+    ReDim HeadNames(RetLng - 1)
+    ReDim HeadIds(RetLng - 1)
+    
+    RetLng = 0
+    While Not Rst.EOF
+        HeadNames(RetLng) = FormatField(Rst("AccName"))
+        HeadIds(RetLng) = FormatField(Rst("accId"))
+        RetLng = RetLng + 1
+        Rst.MoveNext
+    Wend
+    MainHeads = RetLng
+
+End Function
+Public Function Heads_GovtLoanSubsidy(HeadsName() As String, HeadId() As Long) As Integer
+    
+    Heads_GovtLoanSubsidy = GetHeadNames(HeadsName, HeadId, wis_GovtLoanSubsidyHead)
+    
+End Function
+
+
+Public Function Heads_TradingExpense(Heads() As String, HeadId() As Long) As Integer
+    
+    Heads_TradingExpense = GetHeadNames(Heads, HeadId, wis_TradingExpenditureHead)
+    
+End Function
+
+Public Function Heads_Expense(Heads() As String, HeadId() As Long) As Integer
+    
+    Heads_Expense = GetHeadNames(Heads, HeadId, wis_ExpenditureHead)
+    
+End Function
+
+
+Public Sub Show()
+    gWindowHandle = frmBankAcc.hWnd
+    frmBankAcc.Show 'vbModal
+End Sub
+
+Private Function GetHeadNames(HeadNames() As String, HeadIds() As Long, HeadOffSet As wisBankHeads) As Integer
+ReDim HeadNames(0)
+ReDim HeadIds(0)
+    
+    gDBTrans.SQLStmt = "Select * From AccMaster Where AccId > " & HeadOffSet & _
+                    " and accid < " & HeadOffSet + wis_BankHeadOffSet
+    Dim RetLng As Long
+    RetLng = gDBTrans.SQLFetch
+    If RetLng < 1 Then Exit Function
+    Dim Rst As Recordset
+    Set Rst = gDBTrans.Rst.Clone
+    ReDim HeadNames(RetLng - 1)
+    ReDim HeadIds(RetLng - 1)
+    RetLng = 0
+    While Not Rst.EOF
+        HeadNames(RetLng) = FormatField(Rst("AccName"))
+        HeadIds(RetLng) = FormatField(Rst("accId"))
+        RetLng = RetLng + 1
+        Rst.MoveNext
+    Wend
+    GetHeadNames = RetLng
+End Function
