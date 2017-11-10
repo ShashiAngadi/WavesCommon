@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "Msflxgrd.ocx"
+Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Begin VB.Form frmPig2PC 
    Caption         =   "Amount Collected"
    ClientHeight    =   5805
@@ -206,6 +206,149 @@ lineCount = 0
 iFileNo = FreeFile
 Open strFileName For Input As #iFileNo
 
+ReDim Preserve TransAmount(0)
+
+gDbTrans.BeginTrans
+
+Do While Not EOF(iFileNo)
+  'Input #iFileNo, strData
+  Line Input #iFileNo, strData
+NextLine:
+  If lineCount > 0 Then
+    'Reading the Data
+    strArr = Split(strData, ",")
+    
+    'Get the AccID
+    'Search the details in AcciD
+    AccID = GetAccountIDByAccountNumber(strArr(0))
+    
+    'If account ID not found
+    If m_RstPigmy.EOF Then GoTo NextRecord
+    
+    'TransAmount(0) = CDbl(strArr(5))  ' Accountwise Data
+    TransAmount(0) = CDbl(strArr(1))  ' Reciept wise
+    
+    'For loopCount = 1 To NumOfDays
+    '    TransAmount(loopCount - 1) = CDbl(strArr(4))
+    'Next loopCount
+    
+    TransDate = GetSysFormatDate(Replace(strArr(4), ".", "/"))
+    Call InsertPigmyAmount(AccID, TransDate, TransAmount)
+    'Update the Grid
+    
+  Else 'READING THE HEADR
+    
+    strArr = Split(strData, ",")
+    ''Get the AgenID as
+    If gAgentID <> CInt(Right(strArr(3), 3)) Then
+        MsgBox "The file does not belongs to this pigmy agent", vbOKOnly, "Index 2000"
+        Exit Sub
+    End If
+    
+    TransDate = GetSysFormatDate(Replace(strArr(4), ".", "/"))
+    AmountCollected = CCur(strArr(2))
+    
+    NumOfDays = 1
+    NumOfRecord = CSng(strArr(1))
+    Set m_RstPigmy = GetRecordSet(gAgentID)
+    ReDim Preserve TransAmount(NumOfDays)
+    ReDim Preserve TotalAmount(NumOfDays)
+    If (UBound(strArr)) > 6 Then
+        strArrWhole = Split(strData, vbLf)
+        ArrayCount = UBound(strArrWhole)
+    End If
+
+  End If
+NextRecord:
+  lineCount = lineCount + 1
+  If ArrayCount > lineCount Then
+    strData = strArrWhole(lineCount)
+    GoTo NextLine
+  End If
+Loop
+Close #iFileNo
+
+'Now Update the Pigmy Transaction for Agent
+If Not AgentTransaction(GetSysFormatDate(gStrDate), AmountCollected) Then
+    GoTo ErrLine:
+End If
+
+gDbTrans.CommitTrans
+
+On Error Resume Next
+
+'Move teh FIle to the Archive folder
+''Check for the archive folder
+If Not (GetAttr(App.Path & "\Archive") And vbDirectory) Then _
+    MkDir (App.Path & "\Archive")
+If Err.Number = 53 Then MkDir (App.Path & "\Archive")
+'Now Move the file
+MkDir (App.Path & "\Archive")
+Dim target As String
+target = App.Path & "\Archive\Pig_2_PC" & "_" & CStr(gAgentID) & "_" & Format(Now, "DD-MM-YYYY") & ".dat"
+Name strFileName As target
+
+Exit Sub
+
+ErrLine:
+    
+     If gDbTrans.isInTransaction Then
+        MsgBox "unable to transfer the pigmy details", vbOKOnly, wis_MESSAGE_TITLE
+        gDbTrans.RollBack
+     End If
+     
+End Sub
+
+Private Sub SaveBalajiTransOLD()
+
+Dim strFileName As String
+Dim agentFileName As String
+strFileName = App.Path & "\PCRX.TXT"
+
+If gAgentID > 0 Then
+    agentFileName = App.Path + "\" + Format(gAgentID, "0000") + "-pcrx.dat.txt"
+    If Dir(agentFileName) <> "" Then
+        strFileName = agentFileName
+    Else
+        agentFileName = App.Path + "\" + Format(gAgentID, "0000") + "-pcrx.dat"
+        If Dir(agentFileName) <> "" Then strFileName = agentFileName
+    End If
+End If
+
+If Dir(strFileName) = "" Then
+    MsgBox "Input does not exists", vbOKOnly, "Index 2000"
+    Exit Sub
+End If
+    
+'Now Read the file
+Dim iFileNo As Integer
+Dim strData As String
+Dim lineCount As Integer
+Dim strArr() As String
+Dim strArrWhole() As String
+Dim lastAccId As Long
+Dim NumOfRecord As Integer
+Dim AmountCollected As Currency
+Dim NumOfDays As Single
+Dim AccountNotFound(0) As Integer
+
+Dim AccID As Integer
+Dim TransAmount() As Double
+Dim TotalAmount() As Double
+Dim AccountTotal As Double
+Dim loopCount As Integer
+Dim TransDate As Date
+Dim LastTransDate As Date
+Dim ArrayCount As Integer
+
+Dim Balance As Currency
+Dim TransID As Long
+
+TransDate = GetSysFormatDate(gStrDate)
+lineCount = 0
+iFileNo = FreeFile
+Open strFileName For Input As #iFileNo
+
 gDbTrans.BeginTrans
 
 Do While Not EOF(iFileNo)
@@ -303,16 +446,16 @@ Private Sub cmdSave_Click()
 
 Dim strPigmyType As String
 
-If gDEVICE = "BALAJI" Then
+If gDEVICE = "BALAJI_OLD" Then
+    SaveBalajiTransOLD
+ElseIf gDEVICE = "BALAJI" Then
     Call SaveBalajiTrans
 Else
     Call SavePrathinidhiTrans
 End If
 
-
-
-
 Call gDbTrans.CloseDB
+
 Unload Me
 
 End Sub
@@ -322,7 +465,9 @@ Private Sub Form_Load()
 Call gDbTrans.OpenDB(gDBFileName, constDBPWD)
     SetKannadaCaption
     'Get theData file
-    If gDEVICE = "BALAJI" Then
+    If gDEVICE = "BALAJI_OLD" Then
+        GetBalajiDataFromPigOLD
+    ElseIf gDEVICE = "BALAJI" Then
         GetBalajiDataFromPig
     Else
         GetPrathinidhiData
@@ -606,7 +751,7 @@ Private Function GetAccountIDByAccountNumber(AccNum As String) As Integer
 GetAccountIDByAccountNumber = 0
     Dim newAccNum As String
     newAccNum = Trim$(AccNum)
-    If gDEVICE <> "BALAJI" Then
+    If gDEVICE <> "BALAJI" And gDEVICE <> "BALAJI_OLD" Then
         Do While Mid$(newAccNum, 1, 1) = "0"
             ''
             m_RstPigmy.MoveFirst
@@ -624,6 +769,146 @@ End Function
 
 
 Private Sub GetBalajiDataFromPig()
+On Error Resume Next
+
+Dim strFileName As String
+Dim agentFileName As String
+strFileName = App.Path & "\PCRX.TXT"
+
+If gAgentID > 0 Then
+    agentFileName = App.Path + "\" + Format(gAgentID, "0000") + "-pcrx.dat.txt"
+    
+    If Dir(agentFileName) <> "" Then
+        strFileName = agentFileName
+    Else
+        agentFileName = App.Path + "\" + Format(gAgentID, "0000") + "-pcrx.dat"
+        If Dir(agentFileName) <> "" Then strFileName = agentFileName
+    End If
+
+End If
+
+If Dir(strFileName) = "" Then
+    MsgBox "Input file does not exists", vbOKOnly, "Index 2000"
+    'Unload Me
+    Exit Sub
+End If
+
+'Now Read the file
+Dim iFileNo As Integer
+Dim strData As String
+Dim lineCount As Integer
+Dim strArr() As String
+Dim strArrWhole() As String
+Dim lastAccId As Long
+Dim NumOfRecord As Integer
+Dim NumOfDays As Single
+Dim AccountNotFound(0) As Integer
+'Dim m_RstPigmy As Recordset
+
+Dim AccID As Integer
+Dim TransAmount As Double
+Dim TotalAmount() As Double
+Dim AccountTotal As Double
+Dim loopCount As Integer
+Dim TransDate As Date
+Dim LastTransDate As Date
+Dim ArrayCount As Integer
+
+lineCount = 0: ArrayCount = 0
+
+iFileNo = FreeFile
+Open strFileName For Input As #iFileNo
+Do While Not EOF(iFileNo)
+  'Input #iFileNo, strData
+  Line Input #iFileNo, strData
+NextLine:
+  If lineCount > 0 Then
+    'Reading the Data
+    strArr = Split(strData, ",")
+    'Get the AccID
+    AccID = CInt(strArr(0))
+    
+    'Search the details in AcciD
+    'm_RstPigmy.MoveFirst
+    'm_RstPigmy.Find "AccId = " & AccID
+    AccID = GetAccountIDByAccountNumber(Trim$(strArr(0)))
+    'If account ID not found
+    If m_RstPigmy.EOF Then
+        'ReDim AccountNotFound(UBound(AccountNotFound) + 1)
+        'AccountNotFound(UBound(AccountNotFound) - 1) = AccID
+        GoTo NextRecord
+    End If
+    'Balance = FormatField(m_RstPigmy("Balance"))
+    'TransId = FormatField(m_RstPigmy("TransID"))
+    ''Now add this to Database
+    
+    TransDate = GetSysFormatDate(Replace(strArr(4), ".", "/"))
+    'TransAmount = CDbl(strArr(5))  ' Accountwise Data
+    TransAmount = CDbl(strArr(1))  ' Reciept wise
+    
+    'TransAmount = CDbl(strArr(4))
+    'Call InsertPigmyAmount(AccID, TransDate, TransAmount)
+    'Update the Grid
+    With grd
+        If .rows = .Row + 1 Then .rows = .rows + 1
+        .Row = .Row + 1
+        .Col = 0: .Text = CStr(.Row)
+        .Col = 1: .Text = FormatField(m_RstPigmy("AccNum"))
+        .Col = 2: .Text = FormatField(m_RstPigmy("Name"))
+        .Col = 3: .Text = FormatField(m_RstPigmy("FullName"))
+        AccountTotal = 0
+        For loopCount = 4 To (3 + NumOfDays)
+            '.Col = loopCount: .Text = FormatCurrency(CCur(TransAmount(loopCount - 4)))
+            'AccountTotal = AccountTotal + CCur(TransAmount(loopCount - 4))
+            .Col = loopCount: .Text = FormatCurrency(CCur(TransAmount))
+            AccountTotal = AccountTotal + CCur(TransAmount)
+        Next
+        .Col = loopCount: .Text = FormatCurrency(AccountTotal)
+    End With
+    
+  Else
+    'reading the header
+    strArr = Split(strData, ",")
+    ''Get the AgenID as
+    cmdSave.Enabled = True
+    If gAgentID <> CInt(strArr(3)) Then
+        MsgBox "The file does not belongs to this pigmy agent", vbOKOnly, "Index 2000"
+        cmdSave.Enabled = False
+        'Exit Sub
+    End If
+    
+    'lastAccId = CLng(strArr(2))
+    If InStr(1, strArr(4), ".") Then
+        strArr(4) = Replace(strArr(4), ".", "/")
+    End If
+    TransDate = GetSysFormatDate(strArr(4))
+    
+    'NumOfDays = CSng(strArr(8))
+    NumOfDays = 1
+    NumOfRecord = CSng(strArr(1))
+    Set m_RstPigmy = GetRecordSet(CInt(Right(strArr(3), 3)))
+    'ReDim Preserve TransAmount(NumOfDays)
+    ReDim Preserve TotalAmount(NumOfDays)
+    Call InitGrid(TransDate, NumOfDays)
+    grd.Row = 0
+    If (UBound(strArr)) > 5 Then
+        strArrWhole = Split(strData, vbLf)
+        ArrayCount = UBound(strArrWhole)
+    End If
+  End If
+NextRecord:
+  lineCount = lineCount + 1
+  If ArrayCount > lineCount Then
+    strData = strArrWhole(lineCount)
+    GoTo NextLine
+  End If
+Loop
+Close #iFileNo
+    
+End Sub
+
+
+Private Sub GetBalajiDataFromPigOLD()
 On Error Resume Next
 
 Dim strFileName As String

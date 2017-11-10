@@ -91,7 +91,9 @@ Dim agentFileName As String
 Filename = "\Pig_2_PC.Dat"
 agentFileName = agentFileName
 
-If gDEVICE = "BALAJI" Then
+If gDEVICE = "BALAJI_OLD" Then
+    'CreateBalajiOLDOutput
+ElseIf gDEVICE = "BALAJI" Then
     Filename = "\PCRX.TXT"
     If gAgentID > 0 Then agentFileName = Format(gAgentID, "0000") + "-pcrx.dat.txt"
     If Dir(App.Path & agentFileName) <> "" Then

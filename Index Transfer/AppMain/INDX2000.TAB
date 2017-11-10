@@ -102,7 +102,10 @@ Table87=SHGTrans
 Table88=AmountReceivable
 Table89=AssetDetails
 Table90=FarmerTypeTab
-;Table91=DepositScheme
+Table91=MemberTypeTab
+Table92=DepositTypeTab
+Table93=KYCTab
+;Table94=DepositScheme
 
 [Install]
 Field1=FieldName=KeyData;FieldType=dbText;FieldLength=250
@@ -150,6 +153,7 @@ Field15=FieldName=FolioNo;FieldType=dbText;FieldLength=10
 Field16=FieldName=InOperative;FieldType=dbBoolean;Default=False;Desc=This field identifies whether this account is operative or inoperative.
 Field17=FieldName=UserID;FieldType=dbInteger
 Field18=FieldName=LastPrintRow;FieldType=dbInteger
+Field19=FieldName=DepositType;FieldType=DBByte
 ;Field19=FieldName=DepositType;FieldType=dbInteger
 ;Field19=FieldName=AccSuffix;FieldType=dbText;FieldLength=10
 Index1=IndexName=idxAccID;Fields=AccID;Primary=True;Unique=True;IndexNulls=DisallowNulls
@@ -225,6 +229,7 @@ Field33=FieldName=LastPrintRow;FieldType=dbInteger
 Field34=FieldName=NomineeName;FieldType=dbText;FieldLength=250
 Field35=FieldName=NomineeAge;FieldType=dbByte
 Field36=FieldName=NomineeRelation;FieldType=dbText;FieldLength=150
+Field37=FieldName=DepositType;FieldType=DBByte
 Index1=IndexName=idxLoan;Fields=LoanID;Unique=True;Primary=True
 Index2=IndexName=idxCustomer;Fields=CustomerID
 Index3=IndexName=idxLoanAcc;Fields=AccNum
@@ -350,7 +355,7 @@ Field18=FieldName=LastPrintId;FieldType=DbLong;Default=1;Desc=This keeps transid
 Field19=FieldName=LastPrintRow;FieldType=DbInteger;Default=1;Desc=This keeps record of page upto where printing was done.
 Field20=FieldName=MemberAccountType;FieldType=dbByte;Required=True;Desc=This Identifies the each member to a Member group.
 Index1=IndexName=idxAccID;Fields=AccID;Primary=True;Unique=true
-Index2=IndexName=idxAccNo;Fields=AccNum+MemberAccountType;Primary=True;Unique=true
+Index2=IndexName=idxAccNo;Fields=AccNum+MemberAccountType;Unique=true
 
 [MemTrans]
 Field1=FieldName=AccId;FieldType=dbLong;Required=True
@@ -424,6 +429,7 @@ Field15=FieldName=LastPrintId;FieldType=Long;Default=1;Desc=This keeps transid o
 Field16=FieldName=InOperative;FieldType=Boolean;Default=False;Desc:This field identifies whether this account is operative or inoperative.
 Field17=FieldName=UserID;FieldType=dbInteger
 Field18=FieldName=LastPrintRow;FieldType=dbInteger
+Field19=FieldName=DepositType;FieldType=DBByte
 Index1=IndexName=idxAccID;Fields=AccID;Primary=True;Unique=True
 Index2=IndexName=idxAccnum;Fields=AccNum;Unique=True
 
@@ -803,6 +809,7 @@ Field20=FieldName=LoanId;FieldType=DbLong;Default=0
 Field21=FieldName=UserId;FieldType=dbInteger
 Field22=FieldName=AccGroupID;FieldType=Byte;Default=1
 Field23=FieldName=LastPrintRow;FieldType=dbInteger
+Field24=FieldName=DepositType;FieldType=DBByte
 Index1=IndexName=idxAccId;Fields=AccID;Primary=True;Unique=True
 Index2=IndexName=idxAgentAcc;Fields=AgentId+AccNum;Unique=True
 Index3=IndexName=idxAccNum;Fields=AccNum
@@ -905,6 +912,7 @@ Field22=FieldName=LastPrintRow;FieldType=dbInteger
 Field23=FieldName=Cumulative;FieldType=dbByte
 Field24=FieldName=NomineeName;FieldType=dbText;FieldLength=250
 Field25=FieldName=NomineeAge;FieldType=dbByte
+Field26=FieldName=DepositType;FieldType=DBByte
 Index1=IndexName=idxAccID;Fields=AccID;Primary=True;Unique=True
 Index2=IndexName=idxAccnum;Fields=AccNum;Unique=True
 
@@ -1334,6 +1342,41 @@ Field2=FieldName=TypeName;FieldType=dbText;FieldLength=150;Required=True
 Field3=FieldName=TypeEnglish;FieldType=dbText;FieldLength=150
 Index1=IndexName=idxFarmer;Fields=FarmerTypeID;Primary=True;Unique=true
 
+[MemberTypeTab]
+Field1=FieldName=MemberType;FieldType=dbByte;Required=True
+Field2=FieldName=MemberTypeName;FieldType=dbText;FieldLength=150;Required=True
+Field3=FieldName=MemberTypeNameEnglish;FieldType=dbText;FieldLength=150
+Field4=FieldName=UserID;FieldType=dbInteger
+Index1=IndexName=idxMemType;Fields=MemberType;Primary=True;Unique=true
+
+
+[DepositTypeTab]
+Field1=FieldName=DepositType;FieldType=dbByte;Required=True
+Field2=FieldName=DepositTypeName;FieldType=dbText;FieldLength=150;Required=True
+Field3=FieldName=DepositTypeNameEnglish;FieldType=dbText;FieldLength=150
+Field4=FieldName=UserID;FieldType=dbInteger
+Field5=FieldName=ModuleID;FieldType=dbInteger;Required=True
+;Index1=IndexName=idxDepType;Fields=DepositType;Primary=True;Unique=true
+
+[KYCTab]
+Field1=FieldName=KYCID;FieldType=dbLong;Required=True
+Field2=FieldName=CustomerID;FieldType=dbLong;Required=True
+Field3=FieldName=CustomerName;FieldType=dbText;FieldLength=250
+Field4=FieldName=IDType1;FieldType=dbByte
+Field5=FieldName=IDText1;FieldType=dbText;FieldLength=150
+Field6=FieldName=IDType2;FieldType=dbByte
+Field7=FieldName=IDText2;FieldType=dbText;FieldLength=150
+Field8=FieldName=ExtBankName1;FieldType=dbText;FieldLength=100
+Field9=FieldName=ExtAccNum1;FieldType=dbText;FieldLength=20
+Field10=FieldName=ExtIFSC1;FieldType=dbText;FieldLength=20
+Field11=FieldName=ExtBankName2;FieldType=dbText;FieldLength=100
+Field12=FieldName=ExtAccNum2;FieldType=dbText;FieldLength=20
+Field13=FieldName=ExtIFSC2;FieldType=dbText;FieldLength=20
+Field14=FieldName=CustPhone;FieldType=dbText;FieldLength=20
+Index1=IndexName=idxKYCID;Fields=KyCID;Primary=True;Unique=True;IndexNulls=DisallowNulls
+;Index2=IndexName=idxKYCCust;Fields=KYCID+CustomerID;Unique=True;IndexNulls=DisallowNulls
+
+
 [Query]
 
 [Relations]
@@ -1391,6 +1434,7 @@ Relation45=RelationName=RelnEmpMaster;Field=CustomerID;ForeignTable=EmpDetails;S
 Relation46=RelationName=RelnEmpUser;Field=UserID;ForeignTable=EmpDetails;SourceTable=UserTab
 Relation47=RelationName=RelnAsset;Field=CustomerID;ForeignTable=AssetDetails;SourceTable=NameTab
 Relation48=RelationName=RelnCustFarmer;Field=FarmerTypeID;ForeignTable=NameTab;SourceTable=FarmerTypeTab
+Relation49=RelationName=RelnCustKYC;Field=CustomerID;ForeignTable=KYCTab;SourceTable=NameTab
 
-;Relation49=RelationName=RelnAliasName;Field=HeadName;ForeignTable=BankHeadIds;SourceTable=Heads
-;Relation50=RelationName=RelnCompany;Field=HeadID;ForeignTable=CompanyCreation;SourceTable=Heads
+;Relation50=RelationName=RelnAliasName;Field=HeadName;ForeignTable=BankHeadIds;SourceTable=Heads
+;Relation51=RelationName=RelnCompany;Field=HeadID;ForeignTable=CompanyCreation;SourceTable=Heads

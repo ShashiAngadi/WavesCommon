@@ -1,9 +1,9 @@
 [Language]
 Language=Kannada
 [DBPath]
-Path=C:\Projects\Common Projects\PigmyTransfer
+Path=c:\Projects\Index 2000 Total New\APPMAIN
 [Pigmy]
-Machine=Prathinidhi
+Machine=Balaji
 PigmyCount=999
 [FinYear]
 Year1=FromYear#01/04/2012,ToYear#31/03/2013,DBPath#WISDB1213

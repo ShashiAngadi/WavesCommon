@@ -370,6 +370,15 @@ Public Sub ChangeDBFont(dbName As String)
     SQL_Stmt = "Select FarmerTypeID,TypeName  from FarmerTypeTab"
     If Not UPdateRecords(SQL_Stmt, tableName) Then GoTo EndLine
     
+    'MEMBER TYpe
+    tableName = "MemberTypeTab"
+    SQL_Stmt = "Select MemberType,MemberTypeName  from MemberTypeTab where MemberType > 0"
+    If Not UPdateRecords(SQL_Stmt, tableName) Then GoTo EndLine
+    
+    'SB/CA Deposit TYpe
+    tableName = "DepositTypeTab"
+    SQL_Stmt = "Select DepositType,DepositTypeName  from DepositTypeTab"
+    If Not UPdateRecords(SQL_Stmt, tableName) Then GoTo EndLine
         
     dbUtils.CommitTrans
     MsgBox "ALL Nudi to Suchita Transfer done", , "Index Database"
@@ -434,7 +443,7 @@ Private Function UpdateNameRecords() As Boolean
                 If Len(FormatField(rst("FullName"))) < 1 Then _
                     SQL_Stmt = SQL_Stmt & ", FullName = " & AddQuotes(ConvertToEnglish(isciName), True)
                 
-                SQL_Stmt = SQL_Stmt & ", IsciName = " & AddQuotes(SuchiToIscii(Left(isciName, 20), 7), True)
+                SQL_Stmt = SQL_Stmt & ", IsciName = " & AddQuotes(Left(SuchiToIscii(Left(isciName, 20), 7), 20), True)
                 
                 ''AddBack the Where Caluse
                 dbUtils.SqlStmt = "Update NameTab " & SQL_Stmt & " Where CustomerID = " & rst(0)

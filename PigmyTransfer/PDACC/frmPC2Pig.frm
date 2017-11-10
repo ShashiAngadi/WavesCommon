@@ -88,7 +88,9 @@ Private Sub cmdExport_Click()
 
 Dim strPigmyType As String
 
-If gDEVICE = "BALAJI" Then
+If gDEVICE = "BALAJI_OLD" Then
+    CreateBalajiOLDOutput
+ElseIf gDEVICE = "BALAJI" Then
     CreateBalajiOutput
 Else
     CreatePrathinidhi
@@ -108,7 +110,7 @@ End Sub
 Private Sub SetKannadaCaption()
 Call SetFontToControls(Me)
 End Sub
-Private Sub CreateBalajiOutput()
+Private Sub CreateBalajiOLDOutput()
 
 Dim sFileText As String
 Dim iFileNo As Integer
@@ -208,6 +210,102 @@ MsgBox "File for the pigmy export has created", vbOKOnly, "Index 2000"
 On Error Resume Next
 
 End Sub
+
+
+Private Sub CreateBalajiOutput()
+
+Dim sFileText As String
+Dim iFileNo As Integer
+Dim strData As String
+Dim strTemp As String
+Dim rowNo As Integer
+Dim m_PigmyType As String
+Dim strName As String
+Dim strAccNum As String
+
+
+'LINE LENGHT  56 chars
+
+'Print the Header
+'1) Agent's last account        6 digit
+'2) Total No Of Receipet        6 digit
+'3) Total Collect Amount        16 digit Last A/c no 6 digits
+'4) Bank(3) & agent(3) code     6 digit
+'5) Collection(current) date    8 digit
+'6) Password 8 digit(4 key pad & 4 holidya) 8 digit
+
+
+'7) Password 8 digit
+    
+
+strData = ""
+strTemp = m_LastAccountId
+If Len(strTemp) > 6 Then strTemp = strTemp & Left$(1, 6)
+If Len(strTemp) < 6 Then strTemp = String(6 - Len(strTemp), " ") & strTemp
+strData = strTemp                                           '1) 6 digit Agent's last account
+strData = strData & "," & Format(m_NoOFAccounts, "000000")  '2) 6 digit Total No Of Receipet
+strData = strData & "," & "000000          "                '3) 16 digit Total Collect Amount        16 digit Last A/c no 6 digits
+strData = strData & ",000" & Format(gAgentID, "000")        '4) 6 digit Bank(3) & agent(3) code     6 digit
+strData = strData & "," & Format(Now, "DD.MM.YY")           '5) Collection(current) date    8 digit
+strData = strData & "," & "12341234"                        '6) Password 8 digit(4 key pad & 4 holidya) 8 digit
+
+iFileNo = FreeFile
+
+Open App.Path & "\PCTX.DAT" For Output As #iFileNo
+
+'Write the header of file
+Print #iFileNo, strData
+
+Dim Rst As Recordset
+Set Rst = GetRecordSet(gAgentID)
+    
+While Not Rst.EOF
+    strTemp = CStr(FormatField(Rst("AccNum")))
+    
+    m_PigmyType = FormatField(Rst("PigmyType"))
+    
+    strAccNum = CStr(FormatField(Rst("AccNum")))
+    
+    'Replace any Comma's with #
+    strName = FormatField(Rst("FullName"))
+    strName = Replace(strName, ",", "#")
+    
+    If Len(Trim$(strName)) < 1 And gLangOffSet <> wis_KannadaOffset Then strName = FormatField(Rst("Name"))
+    If Len(Trim$(strName)) < 1 Then strName = "Account No:" + String(7 - Len(strAccNum), " ") & strAccNum
+    strName = Left(strName, 16)
+    If Len(strName) < 16 Then strName = strName & String(16 - Len(strName), " ")
+    
+    strData = String(6 - Len(strAccNum), " ") & strAccNum   '1)6 digit A/c no
+    strData = strData & "," & "000000"                      '2) 6 digit 2,3 days collection
+    strData = strData & "," & strName '3) 16 digit Customer Name
+    
+    strTemp = CStr(FormatField(Rst("Balance")) \ 1)
+    strTemp = Right(strTemp, 6)
+    If Len(strTemp) < 6 Then strTemp = String(6 - Len(strTemp), "0") & strTemp
+    strData = strData & "," & strTemp   '4) 6 digit Balance after collection
+    
+    strTemp = IIf(IsNull(Rst("TransDate").Value), Format(Now, "DD.MM.YY"), Format(Rst("TransDate"), "DD.MM.YY"))
+    strData = strData & "," & strTemp   '5) 6 digit Collection Date
+    strData = strData & "," & "000000"  '6) 6 digit Collection amount of a day
+    If Len(strData) < 56 Then _
+     strData = strData & String(56 - Len(strData), " ") '7) 1 digit Last one should be space
+    
+    ''Move to the next recrod
+    Rst.MoveNext
+    'Update the file
+    'Write #iFileNo, strData
+    Print #iFileNo, strData
+
+Wend
+Print #iFileNo, Chr(4)
+
+Close #iFileNo
+
+MsgBox "File for the pigmy export has created", vbOKOnly, "Index 2000"
+On Error Resume Next
+
+End Sub
+
 
 
 Private Sub CreatePrathinidhi()

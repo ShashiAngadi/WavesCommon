@@ -39,7 +39,6 @@ Call KannadaInitialize
 
 gDEVICE = UCase$(ReadFromIniFile("Pigmy", "Machine", App.Path & "\" & constFINYEARFILE))
 
-
 'Temprary code for a year
 'Now Crete the Tab Main
 
@@ -174,7 +173,8 @@ gDbTrans.SQLStmt = "SELECT CustomerID,FirstName + ' ' + MiddleName +' '+ " & _
 gDbTrans.CreateView ("QryUserName")
 
 
-SQLStmt = "Select  B.Balance, A.AgentId,A.CreateDate, A.AccID,A.AccNum,A.CustomerId, Name,FullName,B.TransID, 'Pigmy' as PigmyType, val(A.AccNum) as AcNum " & _
+SQLStmt = "Select  B.Balance, A.AgentId,A.CreateDate, A.AccID,A.AccNum,A.CustomerId, " & _
+    " Name,FullName,B.TransID,B.TransDate, 'Pigmy' as PigmyType, val(A.AccNum) as AcNum " & _
     " From QryUserName C Inner join (PDMaster A Inner join " & _
     " (PDtrans B Inner join QryTemp D ON B.TransId = D.MaxTransID AND D.AccID = B.AccID )" & _
         " On A.AccID = B.AccId )" & _
@@ -186,7 +186,7 @@ SQLStmt = "Select  B.Balance, A.AgentId,A.CreateDate, A.AccID,A.AccNum,A.Custome
 
 gDbTrans.SQLStmt = SQLStmt
 
-SQLStmt = "Select 0 as Balance, A.AgentId, A.CreateDate, A.AccID,A.AccNum, A.CustomerId, Name,FullName, 0 as TransID, 'Pigmy' as PigmyType, val(A.AccNum) as AcNum   " & _
+SQLStmt = "Select 0 as Balance, A.AgentId, A.CreateDate, A.AccID,A.AccNum, A.CustomerId, Name,FullName, 0 as TransID, '1/1/2016' as TransDate, 'Pigmy' as PigmyType, val(A.AccNum) as AcNum   " & _
         " From QryUserName C Inner join PDMaster A ON C.CustomerId = A.CustomerId" & _
         " Where A.AgentID = " & AgentID & " And A.AccID not in (select distinct AccID from pdtrans) " & _
         " "

@@ -1,0 +1,23 @@
+000,12345,0000000000003652.00,00000000000000000021,0000000003,19.12.13,12345
+000,Pigmy,100                ,Bebi B Dashavant    ,0000010.00,19.12.13,00090
+000,Pigmy,419                ,M.M Talikoti        ,0000050.00,19.12.13,00091
+000,Pigmy,220                ,Padmavati I Bhuvi   ,0000010.00,19.12.13,00092
+000,Pigmy,305                ,Mallappa B Hadapad  ,0000015.00,19.12.13,00093
+000,Pigmy,026                ,Basavaraj R Kumbar  ,0000010.00,19.12.13,00094
+000,Pigmy,005                ,Rajakasab H Kolli   ,0000100.00,19.12.13,00095
+000,Pigmy,005                ,Rajakasab H Kolli   ,0000150.00,19.12.13,00096
+000,Pigmy,419                ,M.M Talikoti        ,0000200.00,19.12.13,00097
+000,Pigmy,026                ,Basavaraj R Kumbar  ,0000250.00,19.12.13,00098
+000,Pigmy,156                ,Mahammad H Mulla    ,0000250.00,19.12.13,00099
+000,Pigmy,095                ,Abbusab B Inamadar  ,0000300.00,19.12.13,00100
+000,Pigmy,089                ,Maibub B Balagundi  ,0000150.00,19.12.13,00101
+000,Pigmy,058                ,Ameensab M Talikoti ,0000220.00,19.12.13,00102
+000,Pigmy,005                ,Rajakasab H Kolli   ,0000010.00,19.12.13,00103
+000,Pigmy,005                ,Rajakasab H Kolli   ,0000010.00,19.12.13,00104
+000,Pigmy,006                ,Bibijan R Kolli     ,0000100.00,19.12.13,00105
+000,Pigmy,008                ,Madevappa B Madar   ,0000122.00,19.12.13,00106
+000,Pigmy,125                ,Bhismilla K Bhagavan,0000356.00,19.12.13,00107
+000,Pigmy,214                ,Annapura I Bhovi    ,0000116.00,19.12.13,00108
+000,Pigmy,026                ,Basavaraj R Kumbar  ,0000023.00,19.12.13,00109
+000,Pigmy,419                ,M.M Talikoti        ,0001200.00,19.12.13,00110
+

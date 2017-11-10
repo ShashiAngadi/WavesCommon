@@ -296,7 +296,9 @@ With cdb
     .ShowOpen
     dbName = .FileName
 End With
+
     Call ChangeDBFont(dbName)
+    
 End Sub
 
 Private Sub cmdKeyboard_Click()
