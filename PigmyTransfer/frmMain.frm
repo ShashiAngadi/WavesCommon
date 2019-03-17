@@ -103,8 +103,11 @@ ElseIf gDEVICE = "BALAJI" Then
         If Dir(App.Path & agentFileName) <> "" Then Filename = "\" & agentFileName
     End If
 End If
+Dim datFileName As String
+datFileName = Replace(Filename, "txt", "DAT", , , vbTextCompare)
+datFileName = Replace(datFileName, "txt.txt", "DAT", , , vbTextCompare)
 
-If Dir(App.Path & Filename) = "" Then
+If Dir(App.Path & Filename) = "" And Dir(App.Path & datFileName) = "" Then
     cmdPig2PC.Enabled = False
 Else
     cmdPig2PC.Enabled = True

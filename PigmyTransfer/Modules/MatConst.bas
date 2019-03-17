@@ -6,7 +6,7 @@ Public gOnLine As Boolean
 Public Const constFINYEARFILE = "FinYear.Fin"
 Public Const constBAKFILEPREFIX = "BakI2K"
 Public Const constDBName = "Index 2000.mdb"
-Public Const constDBPWD = "WIS!@#"
+Public Const constDBPWD = "WIS@$)*"
 Public Const constREGKEYNAME = "Software\Waves Information Systems\Index 2000V3\Settings"
 
 Public Const wis_CashParentID = 100000

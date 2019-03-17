@@ -173,8 +173,12 @@ If gAgentID > 0 Then
 End If
 
 If Dir(strFileName) = "" Then
-    MsgBox "Input does not exists", vbOKOnly, "Index 2000"
-    Exit Sub
+    strFileName = Replace(strFileName, "txt", "dat", , , vbTextCompare)
+    If Dir(strFileName) = "" Then
+        MsgBox "Input file does not exists", vbOKOnly, "Index 2000"
+        Exit Sub
+    End If
+    
 End If
     
 'Now Read the file
@@ -788,9 +792,13 @@ If gAgentID > 0 Then
 End If
 
 If Dir(strFileName) = "" Then
-    MsgBox "Input file does not exists", vbOKOnly, "Index 2000"
-    'Unload Me
-    Exit Sub
+    strFileName = Replace(strFileName, "txt", "DAT", , , vbTextCompare)
+    strFileName = Replace(strFileName, "txt.txt", "DAT", , , vbTextCompare)
+    If Dir(strFileName) = "" Then
+        MsgBox "Input file does not exists", vbOKOnly, "Index 2000"
+        'Unload Me
+        Exit Sub
+    End If
 End If
 
 'Now Read the file

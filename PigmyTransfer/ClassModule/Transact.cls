@@ -693,32 +693,43 @@ End Function
 
 Public Function OpenDB(strDBName As String, pwd As String) As Boolean
 
+Dim Retry As Boolean
+
+If m_DBOpen Then
+    OpenDB = True
+    Exit Function
+End If
+Retry = False
 If strDBName = "" Then Exit Function
 
-If Not m_DBOpen Then
-    If m_DataBaseObject Is Nothing Then Set m_DataBaseObject = New ADODB.Connection
-    
-    m_DataBaseObject.Mode = adModeShareDenyNone
-       
-    On Error GoTo ErrLine
-    'Open a connection Using Microsoft.Jet Provider
-    m_DataBaseObject.Open "Provider=Microsoft.Jet.OLEDB.4.0;" & _
-                           "Data Source=" & strDBName & ";" & _
-                           "Jet OLEDB:Database Password=" & pwd & ";"
+If m_DataBaseObject Is Nothing Then Set m_DataBaseObject = New ADODB.Connection
 
-    m_DBOpen = True
+m_DataBaseObject.Mode = adModeShareDenyNone
+RetryLine:
+On Error GoTo ErrLine
+'Open a connection Using Microsoft.Jet Provider
+m_DataBaseObject.Open "Provider=Microsoft.Jet.OLEDB.4.0;" & _
+                       "Data Source=" & strDBName & ";" & _
+                       "Jet OLEDB:Database Password=" & pwd & ";"
 
-End If
 OpenDB = True
+m_DBOpen = True
 
 Exit Function
 
 ErrLine:
+If Retry = False Then
+    Retry = True
+    pwd = "WIS!@#"
+    GoTo RetryLine
+End If
+
       MsgBox "OpenDB: The following error occured, " _
                 & "while opening the database." _
                 & vbCrLf & Err.Description, vbCritical
       
     
+
 End Function
 '
 Public Property Get SQLStmt() As String
